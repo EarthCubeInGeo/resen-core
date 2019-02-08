@@ -1,2 +1,3 @@
-# resen-docs
-A repository of documentation and tutorials for Resen.
+docker-images
+=============
+A repository for the Dockerfiles used to build docker images for Resen.
