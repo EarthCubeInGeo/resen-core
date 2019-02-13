@@ -234,3 +234,12 @@ RUN /bin/bash -c 'source activate python2 && \
 
 # Needed for password-less login on jupyterhub when running locally.
 RUN pip install jupyterhub-dummyauthenticator
+
+# to run the jupyter lab
+RUN pip install jupyterlab
+RUN conda install -c conda-forge ipympl --yes
+RUN conda install -c conda-forge widgetsnbextension --yes
+RUN conda install nodejs --yes
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN jupyter labextension install jupyter-matplotlib
+
