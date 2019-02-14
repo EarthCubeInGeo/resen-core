@@ -243,3 +243,7 @@ RUN conda install nodejs --yes
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter labextension install jupyter-matplotlib
 
+RUN /bin/bash -c 'source activate python2 && \
+    pip install ipykernel'
+RUN /bin/bash -c 'source activate python2 && \
+    python2 -m ipykernel install --user'
