@@ -1,6 +1,6 @@
 resen-core
 =============
-The core docker image used by [resen](https://github.com/EarthCubeInGeo/resen).
+The core docker image used by `resen <https://github.com/EarthCubeInGeo/resen>`_.
 
 Usage
 =====
