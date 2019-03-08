@@ -1,6 +1,6 @@
-docker-images
+resen-core
 =============
-A repository for the Dockerfiles used to build docker images for Resen.
+The core docker image used by [resen](https://github.com/EarthCubeInGeo/resen).
 
 Usage
 =====
