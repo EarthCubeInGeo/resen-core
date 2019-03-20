@@ -1,3 +1,12 @@
+#####################################################################################
+#
+# Rules:
+# 1) do not modify the conda base environment python packages
+# 2) use scripts to install enviroments and packages
+# 3) install system packages with conda (for portability outside of docker)
+#
+#####################################################################################
+
 FROM jupyter/scipy-notebook
 
 MAINTAINER "Todd Valentic" <todd.valentic@sri.com>
@@ -21,21 +30,22 @@ WORKDIR /home/$NB_USER/build
 #######################################################################################
 USER root
 
-# Install development packages (move this into conda? supports windows and macosx outside of docker instead of just linux)
+# Install OS packages that make working easier (tools like vim, etc)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    mpich \
-    gfortran \
-    libhdf5-serial-dev \
-    libfreetype6-dev \
-    libpng-dev \
-    libffi-dev \
-    libssl-dev \
-    libnetcdf-dev \
-    ncurses-dev \
-    g++ \
     mlocate \
-    less 
+    less \
+    vim
+
+
+#    libhdf5-serial-dev \
+#    libfreetype6-dev \
+#    libpng-dev \
+#    libffi-dev \
+#    libssl-dev \
+#    libnetcdf-dev \
+#    ncurses-dev \
+#    g++ \
 #    python-bsddb3             # needed for sciunit2... or can get with conda
 
 #############################
@@ -59,132 +69,73 @@ COPY resources/cdf.sh /etc/profile.d
 
 USER $NB_USER
 
+########################################################
+# Move Conda's envs directory into user home directory
+# Easier for persistence of changes to environment
+########################################################
+RUN mkdir ~/envs && rm -rf /opt/conda/envs && ln -s ~/envs /opt/conda/envs
+
+###############
+# Update Conda 
+###############
+RUN conda install -y -n base conda==4.6.8
+
 ###########################################
 # Install packages with binaries from Conda
 ###########################################
+conda install --yes -n base -c anaconda gcc_linux-64==7.3.0 gfortran_linux-64==7.3.0 gxx_linux-64==7.3.0 # only for linux
+conda install --yes -n base -c anaconda db==5.3.28  # needed for sciunit2
+conda install --yes -n base -c conda-forge mpich==3.2.1 hdf5==1.10.1 # only osx and linux
+conda install --yes -n base -c anaconda libpng-devel-cos6-x86_64==1.2.49 freetype==2.9.1 openssl==1.1.1 libnetcdf==4.6.1 libffi==3.2.1 ncurses==6.1 
 
-#######################
-# Update Conda to 4.6.4
-#######################
-RUN conda install -y -n base conda==4.6.8
-
-#################
-# Conda Libraries
-#################
-RUN conda install -y -n base -c anaconda db==5.3.28   # No windows support... worth investigating adding support to anaconda?
-
-#########################
+############################
 # Set up Conda environments
-#########################
+############################
 
 # python2.7
-RUN conda create --quiet --yes -n python2 \
-    'paramiko=1.17.2' \
-    'pymongo=3.2.2' \
-    'mechanize=0.2.5' \
-    'netcdf4=1.2.7' \
-    'cryptography=1.7.1' \
-    'pytest=3.0.5' \
-    'nbformat=4.4.0' \
-    'cartopy=0.17.0' \
-    'basemap=1.2.0' && \
-    conda remove --quiet --yes -n python2 --force qt pyqt && \
-    conda clean -tipsy
+COPY resources/helpers/setup_py27_env.sh .
+RUN chmod +x setup_py27_env.sh && ./setup_py27_env.sh
+RUN rm setup_py27_env.sh
 
-RUN /bin/bash -c 'source activate python2 && \
-    BERKELEYDB_DIR=/opt/conda pip install bsddb3'
-
-# python3.7
-RUN conda create --quiet --yes -n python3 \
-    'paramiko=1.17.2' \
-    'pymongo=3.2.2' \
-    'mechanize=0.2.5' \
-    'netcdf4=1.2.7' \
-    'cryptography=1.7.1' \
-    'pytest=3.0.5' \
-    'nbformat=4.4.0' \
-    'cartopy=0.17.0' \
-    'basemap=1.2.0' && \
-    conda remove --quiet --yes -n python3 --force qt pyqt && \
-    conda clean -tipsy
-
-
-##################################
-# Install python packages with pip
-##################################
-
-USER $NB_USER 
-
-RUN /bin/bash -c 'source activate python2 && \
-    pip install -U sciunit2==0.4.post3.dev95073526 paramiko==2.4.2 apexpy==1.0.3 ipython==5.8.0'
-
+# python3.6
+COPY resources/helpers/setup_py36_env.sh .
+RUN chmod +x setup_py36_env.sh && ./setup_py36_env.sh
+RUN rm setup_py36_env.sh
 
 ############################
 # Install davitpy 0.8-master
 ############################
-RUN /bin/bash -c 'git clone https://github.com/vtsuperdarn/davitpy.git && \
-    cd davitpy && \
-    git pull origin 0.8-master && \
-    source /opt/conda/bin/activate python2 && \
-    python setup.py install'
+COPY resources/helpers/setup_davitpy.sh .
+RUN chmod +x setup_davitpy.sh && ./setup_davitpy.sh
+RUN rm setup_davitpy.sh
 
 #################
 # Install spacepy
 #################
-RUN /bin/bash -c 'source /opt/conda/bin/activate python2 && \
-    source /etc/profile.d/cdf.sh && \
-    pip install spacepy'
-    # && \
-    #python -c "import spacepy.toolbox; spacepy.toolbox.update()"'
+COPY resources/helpers/setup_spacepy.sh .
+RUN chmod +x setup_spacepy.sh && ./setup_spacepy.sh
+RUN rm setup_spacepy.sh
+
+#################
+# Install pyglow
+#################
+
+#################
+# Install sunpy
+#################
+
+#################
+# Install heliopy
+#################
 
 
-####################################
-# Install amiepy (removed for now)
-####################################
-#https://bitbucket.org/amienext/
-#COPY resources/geospacepy_config.py /tmp
-#RUN chown $NB_USER:$NB_USER /tmp/geospacepy_config.py 
-#RUN /bin/bash -c 'source activate python2 && \
-#    git clone https://bitbucket.org/amienext/geospacepy-lite.git && \
-#    cd geospacepy-lite && \
-#    mv /tmp/geospacepy_config.py geospacepy && \
-#    python setup.py install'
-# 
-#RUN /bin/bash -c 'source activate python2 && \
-#    git clone https://bitbucket.org/amienext/ovationpyme.git && \
-#    cd ovationpyme && \
-#    python setup.py install'
-#  
-# RUN /bin/bash -c 'source activate python2 && \
-#     git clone https://github.com/lkilcommons/apex-python.git && \
-#     cd apex-python && \
-#     python setup.py install'
-#      
-#RUN /bin/bash -c 'source activate python2 && \
-#    git clone https://github.com/lkilcommons/igrfpy.git && \
-#    cd igrfpy && \
-#    python setup.py install'
-#    
-#RUN /bin/bash -c 'source activate python2 && \
-#    git clone https://bitbucket.org/amienext/just_sam.git && \
-#    cd just_sam && \
-#    python setup.py install'
-#
-# RUN /bin/bash -c 'source activate python2 && \
-#    git clone https://bitbucket.org/lkilcommons/amiepy.git && \
-#    cd amiepy && \
-#    sed /package_dir/s/AmiePy/AmiePy/ < setup.py > setup.py.new && \
-#    mv setup.py.new setup.py && \
-#    sed -e "/package_data/s.\[.\[\"tables/test_amie_obs/*\",." < setup.py > setup.py.new && \
-#    mv setup.py.new setup.py && \
-#    python setup.py install && \
-#    nbstripout AmiePyDemo.ipynb && \
-#    sed -e "s/from AmiePy/from amiepy/g" < AmiePyDemo.ipynb > tmp && \
-#    mv tmp AmiePyDemo.ipynb && \
-#    sed -e "s|/home/liamk/Desktop/||g" < AmiePyDemo.ipynb > tmp && \
-#    mv tmp AmiePyDemo.ipynb && \
-#    cp AmiePyDemo.ipynb $HOME/examples'
 
+#############################################
+# BROKEN, SO REMOVED FOR NOW Install amiepy
+#############################################
+#COPY resources/helpers/setup_amiepy.sh .
+#RUN chmod +x setup_amiepy.sh && ./setup_amiepy.sh
+#RUN rm setup_amiepy.sh
 
 
 #########
@@ -210,7 +161,7 @@ WORKDIR /home/$NB_USER/work
 #COPY resources/ExternalStorage.tar.gz /home/$NB_USER/work
 #RUN tar -zxf ExternalStorage.tar.gz
 #
-#RUN /bin/bash -c 'source activate python2 && \
+#RUN /bin/bash -c 'source activate py27 && \
 #    pip install oauth2client google-api-python-client && \
 #    git clone https://github.com/dsoprea/GDriveFS && \
 #    cd GDriveFS && \
@@ -222,10 +173,10 @@ WORKDIR /home/$NB_USER/work
 #############
 # ExternalStorage python package and example notebook
 #
-#RUN /bin/bash -c 'source activate python2 && \
+#RUN /bin/bash -c 'source activate py27 && \
 #    pip install ./ExternalStorage --no-deps'
 #
-#RUN /bin/bash -c 'source activate python2 && pip install -U six'
+#RUN /bin/bash -c 'source activate py27 && pip install -U six'
 #
 #RUN rm -r /home/$NB_USER/work/ExternalStorage /home/$NB_USER/work/ExternalStorage.tar.gz
 
@@ -237,12 +188,12 @@ COPY resources/test_manifest.json /home/$NB_USER/examples
 COPY resources/FetchData.tar.gz /home/$NB_USER/work
 RUN tar -zxf FetchData.tar.gz
 
-RUN /bin/bash -c 'source activate python2 && \
+RUN /bin/bash -c 'source activate py27 && \
     pip install ./FetchData --no-deps'
 
-RUN /bin/bash -c 'source activate python2 && \
+RUN /bin/bash -c 'source activate py27 && \
     pip install pandas'
-RUN /bin/bash -c 'source activate python2 && \
+RUN /bin/bash -c 'source activate py27 && \
     pip install -U numpy'
 
 RUN rm -r /home/$NB_USER/work/FetchData /home/$NB_USER/work/FetchData.tar.gz
@@ -255,7 +206,7 @@ RUN rm -r /home/$NB_USER/work/FetchData /home/$NB_USER/work/FetchData.tar.gz
 #
 #USER $NB_USER
 #
-#RUN /bin/bash -c 'source activate python2 && \
+#RUN /bin/bash -c 'source activate py27 && \
 #    pip install scikit-image h5py pyfits'
 
 #COPY russel_gridding/data_gridding.tar.gz /home/$NB_USER/work
@@ -264,7 +215,7 @@ RUN rm -r /home/$NB_USER/work/FetchData /home/$NB_USER/work/FetchData.tar.gz
 #RUN tar -zxf geomag.tar.gz
 #RUN mv data_gridding /home/$NB_USER/examples
 #
-#RUN /bin/bash -c 'source activate python2 && \
+#RUN /bin/bash -c 'source activate py27 && \
 #    pip install ./geomag --no-deps'
 #
 #RUN rm -r /home/$NB_USER/work/data_gridding.tar.gz /home/$NB_USER/work/geomag.tar.gz /home/$NB_USER/work/geomag
@@ -277,7 +228,7 @@ RUN rm -r /home/$NB_USER/work/FetchData /home/$NB_USER/work/FetchData.tar.gz
 
 
 # Import spacepy once so that we get the .spacepy directory created
-RUN /bin/bash -c 'source activate python2 && \
+RUN /bin/bash -c 'source activate py27 && \
     python -c "import spacepy"'
 
 # Needed for password-less login on jupyterhub when running locally.
