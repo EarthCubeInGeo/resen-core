@@ -13,29 +13,23 @@ source $CONDA_BASE/etc/profile.d/conda.sh
 
 CWD=$(pwd)
 
-SPACEPY_BUILD_DIR=$CWD/spacepy_build
-mkdir -p $SPACEPY_BUILD_DIR
+BASEMAP_BUILD_DIR=$CWD/basemap_build
+mkdir -p $BASEMAP_BUILD_DIR
 
-cd $SPACEPY_BUILD_DIR
-git clone https://github.com/spacepy/spacepy.git
-cd spacepy
-git checkout 8b8c2d56ebdcb1d3a59fd868a1c92f34ce16ec64 -b 0.1.6_withfix
+cd $BASEMAP_BUILD_DIR
+# git clone --depth 0 https://github.com/matplotlib/basemap.git # VERY SLOW
+wget https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
+tar -zxf v1.2.0rel.tar.gz
+cd basemap-1.2.0rel
 
 conda activate py27
-LDFLAGS="-shared" pip install .
+LDFLAGS="-shared" GEOS_DIR=$CONDA_BASE/envs/py27 pip install .
 
 conda deactivate
 
 conda activate py36
-LDFLAGS="-shared" pip install .
-
-# some post-pip initialization of packages
-python -c "import spacepy.toolbox; spacepy.toolbox.update()"
-
-conda deactivate
-
-echo "support_notice: False" >> ~/.spacepy/spacepy.rc
+LDFLAGS="-shared" GEOS_DIR=$CONDA_BASE/envs/py36 pip install .
 
 # cleanup
 cd $CWD
-rm -r $SPACEPY_BUILD_DIR
+rm -r $BASEMAP_BUILD_DIR

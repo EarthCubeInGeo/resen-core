@@ -25,3 +25,6 @@ c.DummyAuthenticator.password = None
 c.Authenticator.whitelist = set(['jovyan'])
 c.Authenticator.admin_users = set(['jovyan'])
 c.JupyterHub.admin_access = True
+
+# We only want to show the virtual environments
+c.KernelSpecManager.ensure_native_kernel=False
