@@ -23,6 +23,11 @@ git checkout tags/0.8-master -b 0.8-master
 conda activate py27
 LDFLAGS="-shared" pip install .
 
+# get hdw.dat and radar.dat - needed so davitpy can get radar information locally
+cd $HOME/cache
+git clone https://github.com/vtsuperdarn/hdw.dat.git
+wget https://raw.githubusercontent.com/SuperDARN/rst/master/tables/superdarn/radar.dat
+
 # cleanup
 cd $CWD
 rm -r $DAVITPY_BUILD_DIR
