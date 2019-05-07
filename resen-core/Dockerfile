@@ -89,6 +89,11 @@ RUN /bin/bash -cl 'bash setup_cartopy.sh && rm setup_cartopy.sh'
 # install davitpy 0.8-master
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
+# set davitpy environment variables
+ENV SD_HDWPATH=$HOME/cache/hdw.dat
+ENV SD_RADAR=$HOME/cache/radar.dat
+
+
 
 # install spacepy 0.1.6
 COPY resources/helpers/setup_spacepy.sh .
