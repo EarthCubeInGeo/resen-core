@@ -48,10 +48,14 @@ pip install -U paramiko==2.4.2 \
                bokeh==1.0.4 \
                pyyaml==5.1 \
                cython==0.29.6 \
-               pyproj==1.9.6
+               pyproj==1.9.6 \
+               madrigalweb==3.1.10
 
 # Custom pip installation for any package that needs it
 LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
+
+# Shapely is a requisite for cartopy
+LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
 
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images

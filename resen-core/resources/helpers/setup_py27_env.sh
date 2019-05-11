@@ -50,10 +50,13 @@ pip install -U paramiko==2.4.2 \
                cython==0.29.6 \
                pyproj==1.9.6 \
                sciunit2==0.4.post3.dev95073526 \
-                #madrigalWeb
+               madrigalweb==3.1.10
 
 # Custom pip installation for any package that needs it
 LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
+
+# Shapely is a requisite for cartopy
+LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
 
 # sciunt2 (no option for berkeleydb < 6 in conda-forge...)
 conda install --yes -n py27 -c anaconda db==5.3.28
