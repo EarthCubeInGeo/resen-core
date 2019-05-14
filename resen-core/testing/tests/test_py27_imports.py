@@ -15,12 +15,15 @@ import importlib
 class ImportTester(unittest.TestCase):
     # In the future, get this list from a Pipfile and 
     # include a test for package version number
-    packages = ['numpy', 'scipy', 'matplotlib', 'cartopy', 'mpl_toolkits.basemap', 'apexpy',
-                'spacepy', 'davitpy', 'pandas', 'h5py', 'pytz', 'netCDF4', 'aacgmv2']
+    packages = ['paramiko','IPython','pymongo','mechanize','netCDF4','cryptography','pytest',
+                'nbformat','numpy','matplotlib','scipy','tables','sgp4','pandas','sympy',
+                'sqlalchemy','h5py','pytz','bokeh','yaml','cython','sciunit2','bsddb3',
+                'apexpy','cartopy','spacepy','davitpy']
 
     def test_imports(self):
         # Try to import all the packages
         for package in self.packages:
+            print("Importing %s" % package)
             importlib.import_module(package)
 
         # if we get here, everything imported fine!

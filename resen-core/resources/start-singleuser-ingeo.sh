@@ -1,11 +1,13 @@
 #!/bin/bash 
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+#
+# Modified by Integrated GeoScience Observatory Team
 
 set -e
 
 . /etc/profile.d/cdf.sh
-source activate python2
+conda activate py36
 
 notebook_arg=""
 if [ -n "${NOTEBOOK_DIR:+x}" ]

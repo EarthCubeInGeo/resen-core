@@ -11,6 +11,9 @@
 
 c = get_config()
 
+# Use Jupyterlab instead of Jupyterhub or notebook server
+c.Spawner.default_url = '/lab'
+
 # Start the notebook server in the home jovyan directory
 c.Spawner.notebook_dir = '/home/jovyan/'
 
@@ -22,3 +25,6 @@ c.DummyAuthenticator.password = None
 c.Authenticator.whitelist = set(['jovyan'])
 c.Authenticator.admin_users = set(['jovyan'])
 c.JupyterHub.admin_access = True
+
+# We only want to show the virtual environments
+c.KernelSpecManager.ensure_native_kernel=False
