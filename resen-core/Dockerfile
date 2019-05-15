@@ -123,3 +123,8 @@ RUN /bin/bash -c 'source /opt/conda/etc/profile.d/conda.sh && \
 RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 0 -o ~/.locate.db\"" >>  ~/.bashrc && \
     echo "alias locate=\"/usr/bin/locate -d ~/.locate.db\"" >>  ~/.bashrc && \
     /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
+
+# Download 110m scale cartopy data
+COPY resources/feature_download.py .
+RUN /bin/bash -cl 'python feature_download.py --do_scales 110m physical cultural && \
+                   rm feature_download.py'
