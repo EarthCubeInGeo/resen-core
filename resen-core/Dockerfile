@@ -123,5 +123,5 @@ RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
 RUN /bin/bash -cl 'source activate py36 && \
-                   python feature_download.py physical cultural --do_scales 110m && \
+                   python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
