@@ -82,10 +82,6 @@ RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && \
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -cl 'bash setup_basemap.sh && rm setup_basemap.sh'
 
-# install cartopy 0.17.0
-COPY resources/helpers/setup_cartopy.sh .
-RUN /bin/bash -cl 'bash setup_cartopy.sh && rm setup_cartopy.sh'
-
 # install davitpy 0.8-master
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
@@ -126,5 +122,6 @@ RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 
 
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
-RUN /bin/bash -cl 'python feature_download.py --do_scales 110m physical cultural && \
+RUN /bin/bash -cl 'source activate py36 && \
+                   python feature_download.py physical cultural --do_scales 110m && \
                    rm feature_download.py'
