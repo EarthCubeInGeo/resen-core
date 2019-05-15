@@ -82,10 +82,6 @@ RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && \
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -cl 'bash setup_basemap.sh && rm setup_basemap.sh'
 
-# install cartopy 0.17.0
-COPY resources/helpers/setup_cartopy.sh .
-RUN /bin/bash -cl 'bash setup_cartopy.sh && rm setup_cartopy.sh'
-
 # install davitpy 0.8-master
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
