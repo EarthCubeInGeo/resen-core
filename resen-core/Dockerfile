@@ -64,16 +64,15 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 # only for python2.7 :
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
-RUN /bin/bash -c 'echo \
-   "if [ -z \$SD_HDWPATH ]; then export SD_HDWPATH=\$HOME/cache/hdw.dat; fi" >> /home/$NB_USER/.bashrc'
-RUN /bin/bash -c 'echo \
-   "if [ -z \$SD_RADAR ]; then export SD_RADAR=\$HOME/cache/radar.dat; fi" >> /home/$NB_USER/.bashrc'
-
+ENV SD_HDWPATH=/home/$NB_USER/cache/hdw.dat
+ENV SD_RADAR=/home/$NB_USER/cache/radar.dat
 
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -c 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
 # Remove apt cache to make the image smaller
+
+WORKDIR /home/$NB_USER
 
 USER root
 RUN rm -rf /var/lib/apt/lists/*
