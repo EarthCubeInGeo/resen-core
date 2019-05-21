@@ -8,28 +8,22 @@
 #
 #######################################################################################
 
-CONDA_BASE=$(conda info --base)
-source $CONDA_BASE/etc/profile.d/conda.sh
-
-CWD=$(pwd)
-
-BASEMAP_BUILD_DIR=$CWD/basemap_build
-mkdir -p $BASEMAP_BUILD_DIR
-
-cd $BASEMAP_BUILD_DIR
+cd $BUILD
 # git clone --depth 0 https://github.com/matplotlib/basemap.git # VERY SLOW
 wget https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
 tar -zxf v1.2.0rel.tar.gz
 cd basemap-1.2.0rel
 
-conda activate py27
-LDFLAGS="-shared" GEOS_DIR=$CONDA_BASE/envs/py27 pip install .
+source /home/$NB_USER/envs/py27/bin/activate
+pip install .
 
-conda deactivate
+deactivate
 
-conda activate py36
-LDFLAGS="-shared" GEOS_DIR=$CONDA_BASE/envs/py36 pip install .
+source /home/$NB_USER/envs/py36/bin/activate
+pip install .
+
+deactivate
 
 # cleanup
-cd $CWD
-rm -r $BASEMAP_BUILD_DIR
+cd $BUILD
+rm -rf basemap-1.2.0rel

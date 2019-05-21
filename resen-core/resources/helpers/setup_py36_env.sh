@@ -7,23 +7,10 @@
 #
 #######################################################################################
 
-CONDA_BASE=$(conda info --base)
-source $CONDA_BASE/etc/profile.d/conda.sh
-
-# Set up and activate the python3.6 environment
-conda create --quiet --yes -n py36 python=3.6 pip=9.0.1
-
-# Install binaries from Conda that are needed for python packages below
-# linux only, can be swapped out for macosx and windows compilers as needed
-conda install --yes -n py36 -c conda-forge gcc_linux-64==7.3.0 gfortran_linux-64==7.3.0 gxx_linux-64==7.3.0
-# some of these are available for windows, some are not
-conda install --yes -n py36 -c conda-forge mpich==3.2.1 hdf5==1.10.1 proj4==4.9.3 geos==3.7.1 ncurses==6.1 libffi==3.2.1 libnetcdf==4.6.1 openssl==1.1.1b freetype==2.9.1 libpng==1.6.36
-#conda install --yes -n py36 -c anaconda libpng-devel-cos6-x86_64==1.2.49 
-
-conda activate py36
+source /home/$NB_USER/envs/py36/bin/activate
 
 # upgrade pip
-pip install pip==19.0.3
+pip install pip==19.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -49,23 +36,17 @@ pip install -U paramiko==2.4.2 \
                pyyaml==5.1 \
                cython==0.29.6 \
                pyproj==1.9.6 \
-               madrigalweb==3.1.10
+               madrigalweb==3.1.10 \
+               cartopy==0.17.0
+
+pip install ipykernel
+python -m ipykernel install --user --name py36 --display-name "py36"
 
 # Custom pip installation for any package that needs it
-LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
-
-# Shapely is a requisite for cartopy
-LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
-
-# Installing cartopy
-LDFLAGS="-shared" pip install -UI --no-binary :all: cartopy==0.17.0
+#LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
 
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
-conda remove --quiet --yes -n py36 --force qt pyqt
 
 # clean up tarballs and cache
-conda clean -tipy
-rm -rf ~/.cache/pip/*
-
-conda deactivate
+deactivate
