@@ -38,7 +38,10 @@ pip install -U paramiko==2.4.2 \
                pyproj==1.9.6 \
                madrigalweb==3.1.10 \
                cartopy==0.17.0 \
-               apexpy==1.0.3
+               bsddb3==6.2.6
+
+# Custom pip installation for any package that needs it
+LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
 
 pip install ipykernel
 python -m ipykernel install --user --name py36 --display-name "py36"

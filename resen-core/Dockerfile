@@ -20,6 +20,10 @@ RUN apt-get install -y --no-install-recommends python2.7 \
     libgeos++-dev libgeos-dev \
     libdb-dev
 
+# davitpy, currently only for python2.7 needs python-tk :
+RUN apt-get install -y --no-install-recommends python-tk
+
+
 RUN pip3 install wheel
 RUN pip3 install ipython
 RUN pip3 install jupyter
