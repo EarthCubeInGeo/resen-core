@@ -4,35 +4,45 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y
 
 # Install packages
-RUN apt-get install -y --no-install-recommends apt-utils curl postgresql \
-    postgresql-client build-essential \
-    autoconf libtool pkg-config python-opengl \
-    python-pyrex python-pyside.qtopengl idle-python2.7 \
-    qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml \
-    libqt4-test libqt4-script libqt4-network libqt4-dbus \
-    gfortran git wget
+RUN apt-get install -y --no-install-recommends apt-utils curl \
+    build-essential \
+    autoconf libtool pkg-config \
+    vim \
+    bash-completion \
+    gfortran \
+    git wget
 
-RUN apt-get install -y python2.7 \
+RUN apt-get install -y --no-install-recommends python2.7 \
     python-setuptools python3-setuptools \
     python-pip python3-pip \
-    python-qt4 python-qt4-gl libgle3 \
-    python-dev python3-dev jupyter jupyter-notebook \
+    python-dev python3-dev \
     libproj-dev proj-data proj-bin \
-    libgeos++-dev libgeos-dev
+    libgeos++-dev libgeos-dev \
+    libdb-dev
 
-RUN pip install jupyterlab
-RUN pip install virtualenv
+RUN pip3 install wheel
+RUN pip3 install ipython
+RUN pip3 install jupyter
+RUN pip3 install jupyterlab
 RUN pip3 install virtualenv
 
+RUN pip install wheel
+RUN pip install virtualenv
+
 LABEL maintainer="Pablo Reyes <pablo.reyes@sri.com>"
-ARG NB_USER="cedar"
-ARG NB_UID="2000"
-ARG NB_GID="2001"
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER
 ARG BUILD=/home/$NB_USER/build
+
 USER $NB_USER
 RUN mkdir -p $BUILD
 WORKDIR $BUILD
+ENV TERM=xterm-256color 
+ENV SHELL=/bin/bash
+RUN jupyter notebook --generate-config
+RUN /bin/bash -c 'echo "c.NotebookApp.ip = \"0.0.0.0\" " >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
 
 USER root
 # NASA CDF library
@@ -52,6 +62,9 @@ RUN mkdir /home/$NB_USER/envs && \
     virtualenv -p /usr/bin/python py27 && \
     virtualenv -p /usr/bin/python3 py36
 
+# activate by default py36 in the terminal
+RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate " >> /home/$NB_USER/.bashrc'
+
 COPY resources/helpers/setup_py27_env.sh .
 RUN /bin/bash -c 'bash setup_py27_env.sh && rm setup_py27_env.sh'
 
@@ -70,12 +83,13 @@ ENV SD_RADAR=/home/$NB_USER/cache/radar.dat
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -c 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
-# Remove apt cache to make the image smaller
-
-WORKDIR /home/$NB_USER
+RUN mkdir /home/$NB_USER/work
+WORKDIR /home/$NB_USER/work
 
 USER root
-RUN rm -rf /var/lib/apt/lists/*
-RUN /bin/bash -c 'rm -rf $BUILD && rm -rf /home/$NB_USER/.wget-hsts'
+# Remove apt cache to make the image smaller
+#RUN rm -rf /var/lib/apt/lists/*
+RUN /bin/bash -c 'rm -rf /home/$NB_USER/build && rm -rf /home/$NB_USER/.wget-hsts'
 
 USER $NB_USER
+

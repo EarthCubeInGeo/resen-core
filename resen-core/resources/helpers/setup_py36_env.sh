@@ -37,16 +37,10 @@ pip install -U paramiko==2.4.2 \
                cython==0.29.6 \
                pyproj==1.9.6 \
                madrigalweb==3.1.10 \
-               cartopy==0.17.0
+               cartopy==0.17.0 \
+               apexpy==1.0.3
 
 pip install ipykernel
 python -m ipykernel install --user --name py36 --display-name "py36"
 
-# Custom pip installation for any package that needs it
-#LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
-
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
-
-# clean up tarballs and cache
 deactivate

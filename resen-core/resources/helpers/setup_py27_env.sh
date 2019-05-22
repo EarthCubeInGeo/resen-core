@@ -40,17 +40,12 @@ pip install -U paramiko==2.4.2 \
                 sciunit2==0.4.post3.dev95073526 \
                 madrigalweb==3.1.10 \
                 pyproj==1.9.6 \
-                cartopy==0.17.0
+                cartopy==0.17.0 \
+                apexpy==1.0.3 \
+                bsddb3==6.2.6
 
 pip install ipykernel
 python -m ipykernel install --user --name py27 --display-name "py27"
-
-# # Custom pip installation for any package that needs it
-# LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
-# 
-# # sciunt2 (no option for berkeleydb < 6 in conda-forge...)
-# conda install --yes -n py27 -c anaconda db==5.3.28
-# BERKELEYDB_DIR=$CONDA_BASE/envs/py27 pip install bsddb3==6.2.6
 
 deactivate
 
