@@ -45,7 +45,7 @@ COPY resources/helpers/install_CDF.sh .
 COPY resources/cdf.sh /etc/profile.d
 # the following is needed so that CDF_LIB is defined even if we use bash without logging in
 RUN /bin/bash -c 'bash install_CDF.sh && \
-                  echo "if [ -z $CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >>  /home/jovyan/.bashrc'
+                  echo "if [ -z \$CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >>  /home/jovyan/.bashrc'
 RUN /bin/bash -c 'rm install_CDF.sh'
 
 # Ok, now do user stuff
