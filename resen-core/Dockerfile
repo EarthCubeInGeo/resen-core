@@ -3,19 +3,22 @@ FROM ubuntu:18.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y
 
+ENV LANG C.UTF-8
+
 # Install packages
 RUN apt-get install -y --no-install-recommends apt-utils curl \
     build-essential \
     autoconf libtool pkg-config \
-    vim \
+    vim zip unzip\
     bash-completion \
     gfortran \
-    git wget
+    git wget rsync
 
 RUN apt-get install -y --no-install-recommends python2.7 \
     python-setuptools python3-setuptools \
     python-pip python3-pip \
     python-dev python3-dev \
+    python3-numpy \
     libproj-dev proj-data proj-bin \
     libgeos++-dev libgeos-dev \
     libdb-dev
