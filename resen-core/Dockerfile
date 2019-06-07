@@ -34,7 +34,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     mlocate \
     less \
-    vim
+    vim \
+    libncurses5-dev
 
 # custom scripts
 COPY resources/start-singleuser-ingeo.sh /usr/local/bin
