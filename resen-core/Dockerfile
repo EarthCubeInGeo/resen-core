@@ -89,6 +89,8 @@ RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
 ENV SD_HDWPATH=$HOME/cache/hdw.dat
 ENV SD_RADAR=$HOME/cache/radar.dat
 
+
+
 # install spacepy 0.1.6
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
@@ -102,9 +104,6 @@ RUN /bin/bash -c 'tar -zxf FetchData.tar.gz && \
                   conda activate py27 && \
                   pip install ./FetchData --no-deps'
 
-# install mangopy
-COPY resources/helpers/setup_mangopy.sh .
-RUN /bin/bash -cl 'bash setup_mangopy.sh && rm setup_mangopy.sh'
 
 # post installation stuff
 # cleanup
