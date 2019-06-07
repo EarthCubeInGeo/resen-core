@@ -61,6 +61,9 @@ LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
 # Installing cartopy
 LDFLAGS="-shared" pip install -UI --no-binary :all: cartopy==0.17.0
 
+# Installing mangopy
+pip install git+https://github.com/astib/MANGO.git@b25cba78e58197394809cb8323656a1d636c3e3d
+
 # sciunt2 (no option for berkeleydb < 6 in conda-forge...)
 conda install --yes -n py27 -c anaconda db==5.3.28
 BERKELEYDB_DIR=$CONDA_BASE/envs/py27 pip install bsddb3==6.2.6
