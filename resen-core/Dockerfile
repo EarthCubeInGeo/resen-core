@@ -95,6 +95,10 @@ ENV SD_RADAR=$HOME/cache/radar.dat
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
+# install pyglow
+COPY resources/helpers/setup_pyglow.sh .
+RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
+
 # DataFetcher python package and example notebook
 COPY resources/FetchingDataFromManifest.ipynb /home/$NB_USER/examples
 COPY resources/test_manifest.json /home/$NB_USER/examples
