@@ -57,6 +57,12 @@ LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installi
 # Shapely is a requisite for cartopy
 LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
 
+# Installing cartopy
+LDFLAGS="-shared" pip install -UI --no-binary :all: cartopy==0.17.0
+
+# Installing mangopy
+pip install git+https://github.com/astib/MANGO.git@b25cba78e58197394809cb8323656a1d636c3e3d
+
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
 conda remove --quiet --yes -n py36 --force qt pyqt

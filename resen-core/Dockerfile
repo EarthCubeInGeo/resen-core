@@ -45,7 +45,7 @@ COPY resources/helpers/install_CDF.sh .
 COPY resources/cdf.sh /etc/profile.d
 # the following is needed so that CDF_LIB is defined even if we use bash without logging in
 RUN /bin/bash -c 'bash install_CDF.sh && \
-                  echo "if [ -z $CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >>  /home/jovyan/.bashrc'
+                  echo "if [ -z \$CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >>  /home/jovyan/.bashrc'
 RUN /bin/bash -c 'rm install_CDF.sh'
 
 # Ok, now do user stuff
@@ -82,10 +82,6 @@ RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && \
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -cl 'bash setup_basemap.sh && rm setup_basemap.sh'
 
-# install cartopy 0.17.0
-COPY resources/helpers/setup_cartopy.sh .
-RUN /bin/bash -cl 'bash setup_cartopy.sh && rm setup_cartopy.sh'
-
 # install davitpy 0.8-master
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
@@ -98,6 +94,10 @@ ENV SD_RADAR=$HOME/cache/radar.dat
 # install spacepy 0.1.6
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
+
+# install pyglow
+COPY resources/helpers/setup_pyglow.sh .
+RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
 # DataFetcher python package and example notebook
 COPY resources/FetchingDataFromManifest.ipynb /home/$NB_USER/examples
