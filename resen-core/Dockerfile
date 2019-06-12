@@ -9,7 +9,7 @@
 
 FROM jupyter/scipy-notebook
 
-MAINTAINER "Todd Valentic" <todd.valentic@sri.com>
+MAINTAINER "Ingeo Team" <ingeo-team@ingeo.datatransport.org>
 
 
 # Create cache directories and prepare for building
@@ -18,10 +18,12 @@ USER $NB_USER
 ENV BUILD $HOME/build
 ENV MPLBACKEND Agg
 
-RUN mkdir -p $HOME/cache/omni && \
-    mkdir -p $HOME/cache/ssies && \
-    mkdir -p $HOME/examples && \
+RUN mkdir -p $HOME/cache && \
     mkdir -p $BUILD 
+
+#    mkdir -p $HOME/examples && \
+#    mkdir -p $HOME/cache/omni && \
+#    mkdir -p $HOME/cache/ssies && \
 
 WORKDIR /home/$NB_USER/build 
 
@@ -57,9 +59,9 @@ USER $NB_USER
 RUN /bin/bash -cl 'mkdir ~/envs && rm -rf /opt/conda/envs && ln -s ~/envs /opt/conda/envs'
 
 # Update conda and pip
-RUN /bin/bash -cl 'conda install -y -n base conda==4.6.11'
+RUN /bin/bash -cl 'conda install -y -n base conda==4.6.14'
 RUN /bin/bash -cl 'conda init'
-RUN /bin/bash -cl 'pip install -U pip==19.0.3'
+RUN /bin/bash -cl 'pip install -U pip==19.1.1'
 
 # Set up Conda environments
 # python2.7
@@ -101,18 +103,18 @@ COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
 # DataFetcher python package and example notebook
-COPY resources/FetchingDataFromManifest.ipynb /home/$NB_USER/examples
-COPY resources/test_manifest.json /home/$NB_USER/examples
-COPY resources/FetchData.tar.gz $PWD
-RUN /bin/bash -c 'tar -zxf FetchData.tar.gz && \
-                  source /opt/conda/etc/profile.d/conda.sh && \
-                  conda activate py27 && \
-                  pip install ./FetchData --no-deps'
+#COPY resources/FetchingDataFromManifest.ipynb /home/$NB_USER/examples
+#COPY resources/test_manifest.json /home/$NB_USER/examples
+#COPY resources/FetchData.tar.gz $PWD
+#RUN /bin/bash -c 'tar -zxf FetchData.tar.gz && \
+#                  source /opt/conda/etc/profile.d/conda.sh && \
+#                  conda activate py27 && \
+#                  pip install ./FetchData --no-deps'
 
 
 # post installation stuff
 # cleanup
-WORKDIR /home/$NB_USER/work
+WORKDIR /home/$NB_USER
 RUN /bin/bash -c 'rm -r $BUILD && rm /home/$NB_USER/.wget-hsts'
 
 # password-less login on jupyterhub when running locally.
