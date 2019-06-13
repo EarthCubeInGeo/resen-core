@@ -23,7 +23,7 @@ conda install --yes -n py27 -c conda-forge mpich==3.2.1 hdf5==1.10.1 proj4==4.9.
 conda activate py27
 
 # upgrade pip
-pip install pip==19.0.3
+pip install pip==19.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap

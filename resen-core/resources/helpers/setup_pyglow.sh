@@ -26,12 +26,14 @@ conda activate py27
 pip install -r requirements.txt
 make -C src/pyglow/models source
 LDFLAGS="-shared" pip install .
+python -c "import pyglow"
 conda deactivate
 
 conda activate py36
 pip install -r requirements.txt
 make -C src/pyglow/models source
 LDFLAGS="-shared" pip install .
+python -c "import pyglow"
 conda deactivate
 
 # cleanup

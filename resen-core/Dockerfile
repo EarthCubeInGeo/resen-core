@@ -122,13 +122,15 @@ RUN /bin/bash -c 'source /opt/conda/etc/profile.d/conda.sh && \
                   conda activate py36 && \
                   pip install jupyterlab jupyterhub-dummyauthenticator'
 
-# NB_USER doesn't have root access, so move the mlocate database
-RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 0 -o ~/.locate.db\"" >>  ~/.bashrc && \
-    echo "alias locate=\"/usr/bin/locate -d ~/.locate.db\"" >>  ~/.bashrc && \
-    /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
-
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
 RUN /bin/bash -cl 'source activate py36 && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
+
+RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && yes | jupyter kernelspec uninstall python3'
+
+# NB_USER doesn't have root access, so move the mlocate database
+RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 0 -o ~/.locate.db\"" >>  ~/.bashrc && \
+    echo "alias locate=\"/usr/bin/locate -d ~/.locate.db\"" >>  ~/.bashrc && \
+    /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
