@@ -7,6 +7,7 @@
 set -e
 
 . /etc/profile.d/cdf.sh
+source /opt/conda/etc/profile.d/conda.sh
 conda activate py36
 
 notebook_arg=""

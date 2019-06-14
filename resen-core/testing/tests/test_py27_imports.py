@@ -18,7 +18,7 @@ class ImportTester(unittest.TestCase):
     packages = ['paramiko','IPython','pymongo','mechanize','netCDF4','cryptography','pytest',
                 'nbformat','numpy','matplotlib','scipy','tables','sgp4','pandas','sympy',
                 'sqlalchemy','h5py','pytz','bokeh','yaml','cython','sciunit2','bsddb3',
-                'apexpy','cartopy','spacepy','davitpy']
+                'apexpy','cartopy','spacepy','davitpy','mangopy','pyglow']
 
     def test_imports(self):
         # Try to import all the packages

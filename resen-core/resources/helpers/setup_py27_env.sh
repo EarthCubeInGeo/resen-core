@@ -23,7 +23,7 @@ conda install --yes -n py27 -c conda-forge mpich==3.2.1 hdf5==1.10.1 proj4==4.9.
 conda activate py27
 
 # upgrade pip
-pip install pip==19.0.3
+pip install pip==19.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -57,6 +57,12 @@ LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installi
 
 # Shapely is a requisite for cartopy
 LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
+
+# Installing cartopy
+LDFLAGS="-shared" pip install -UI --no-binary :all: cartopy==0.17.0
+
+# Installing mangopy
+pip install git+https://github.com/astib/MANGO.git@b25cba78e58197394809cb8323656a1d636c3e3d
 
 # sciunt2 (no option for berkeleydb < 6 in conda-forge...)
 conda install --yes -n py27 -c anaconda db==5.3.28
