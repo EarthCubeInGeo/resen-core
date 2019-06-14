@@ -4,11 +4,6 @@
      "repodigest":'sha256:1da843059202f13443cd89e035acd5ced4f9c21fe80d778ce2185984c54be00b'},
 
     {"version":"2019.1.0rc2","repo":"resen-core","org":"earthcubeingeo",
-     "image_id":'sha256:78ca372a47ca0b00533575aab267c62e3bdf37e9c2c9881c509f39b73e2cd02b',
-     "repodigest":'sha256:70fd4a9a61b8d50b618dfb5cf2a5bdb12ee013f2ab90a778e81cd6f7b79b5e39'},
+     "image_id":'sha256:3ba43e401c1b1a8eca8969aec8426a22d99bca349fd837270fa06dbcaefaeb47',
+     "repodigest":'sha256:c3783e3b7f05ec17f9381a01009b794666107780d964e8087c62f7baaa00049d'},
 ]
-
-
-
-
-
