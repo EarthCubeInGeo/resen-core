@@ -37,7 +37,8 @@ RUN apt-get update && \
     mlocate \
     less \
     vim \
-    libncurses5-dev
+    libncurses5-dev \
+    patch
 
 # custom scripts
 COPY resources/start-singleuser-ingeo.sh /usr/local/bin
@@ -92,8 +93,6 @@ RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
 ENV SD_HDWPATH=$HOME/cache/hdw.dat
 ENV SD_RADAR=$HOME/cache/radar.dat
 
-
-
 # install spacepy 0.1.6
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
@@ -121,6 +120,10 @@ RUN /bin/bash -c 'rm -r $BUILD && rm /home/$NB_USER/.wget-hsts'
 RUN /bin/bash -c 'source /opt/conda/etc/profile.d/conda.sh && \
                   conda activate py36 && \
                   pip install jupyterlab jupyterhub-dummyauthenticator'
+
+# patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
+COPY resources/notebookapp.patch .
+RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
 
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
