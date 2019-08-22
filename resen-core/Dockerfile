@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -y
+RUN apt-get update --fix-missing -y
 
 ENV LANG C.UTF-8
 
@@ -21,7 +21,8 @@ RUN apt-get install -y --no-install-recommends python2.7 \
     python3-numpy \
     libproj-dev proj-data proj-bin \
     libgeos++-dev libgeos-dev \
-    libdb-dev
+    libdb-dev \
+    python3-tk python-tk
 
 # davitpy, currently only for python2.7 needs python-tk :
 RUN apt-get install -y --no-install-recommends python-tk
@@ -86,6 +87,10 @@ COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
 ENV SD_HDWPATH=/home/$NB_USER/cache/hdw.dat
 ENV SD_RADAR=/home/$NB_USER/cache/radar.dat
+
+# install mangopy
+COPY resources/helpers/setup_mangopy.sh .
+RUN /bin/bash -cl 'bash setup_mangopy.sh && rm setup_mangopy.sh'
 
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -c 'bash setup_spacepy.sh && rm setup_spacepy.sh'
