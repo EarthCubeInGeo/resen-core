@@ -1,9 +1,9 @@
 # package_unittests.py
 # script to automatically run unit tests of all packages installed in resen-core
+# currently only works for python3
 
 import sys
 import inspect
-
     
 def apexpy_test():
     pass
@@ -70,7 +70,8 @@ def pytz_test():
     pass
 
 def scipy_test():
-    pass
+    import scipy
+    scipy.test()
 
 def sciunit2_test():
     pass
