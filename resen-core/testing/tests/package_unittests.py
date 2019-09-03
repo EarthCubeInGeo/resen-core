@@ -4,8 +4,17 @@
 
 import sys
 import inspect
-    
+import urllib.request
+import unittest
+
 def apexpy_test():
+
+    # DOES NOT WORK
+#     url = 'https://raw.githubusercontent.com/aburrell/apexpy/master/tests/test_Apex.py'
+#     urllib.request.urlretrieve(url, 'test_Apex.py')
+#     import test_Apex
+#     suite = unittest.TestLoader().loadTestsFromModule(test_Apex)
+#     unittest.TextTestRunner().run(suite)
     pass
 
 def bokeh_test():
@@ -48,6 +57,7 @@ def netCDF4_test():
     pass
 
 def numpy_test():
+    print('NUMPY TESTS')
     import numpy
     numpy.test()
 
@@ -70,6 +80,7 @@ def pytz_test():
     pass
 
 def scipy_test():
+    print('SCIPY TESTS')
     import scipy
     scipy.test()
 
@@ -77,7 +88,10 @@ def sciunit2_test():
     pass
 
 def sgp4_test():
-    pass
+    print('SGP4 TESTS')
+    import sgp4.tests
+    suite = unittest.TestLoader().loadTestsFromModule(sgp4.tests)
+    unittest.TextTestRunner().run(suite)
 
 def spacepy_test():
     pass
