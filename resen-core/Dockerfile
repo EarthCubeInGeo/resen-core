@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update --fix-missing -y
 
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 # Install packages
 RUN apt-get install -y --no-install-recommends apt-utils curl \
