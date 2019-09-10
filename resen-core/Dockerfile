@@ -95,6 +95,10 @@ RUN /bin/bash -cl 'bash setup_mangopy.sh && rm setup_mangopy.sh'
 COPY resources/helpers/setup_spacepy.sh .
 RUN /bin/bash -c 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
+# install pyglow
+COPY resources/helpers/setup_pyglow.sh .
+RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
+
 RUN mkdir /home/$NB_USER/work
 WORKDIR /home/$NB_USER/work
 
