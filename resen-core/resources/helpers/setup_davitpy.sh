@@ -22,7 +22,7 @@ pip install .
 mkdir -p /home/$NB_USER/cache
 cd /home/$NB_USER/cache
 git clone https://github.com/vtsuperdarn/hdw.dat.git
-wget https://raw.githubusercontent.com/SuperDARN/rst/master/tables/superdarn/radar.dat
+wget https://raw.githubusercontent.com/SuperDARN/rst/v4.2/tables/superdarn/radar.dat
 
 deactivate
 
