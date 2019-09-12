@@ -50,7 +50,6 @@ WORKDIR $BUILD
 ENV TERM=xterm-256color 
 ENV SHELL=/bin/bash
 RUN jupyter notebook --generate-config
-RUN /bin/bash -c 'echo "c.NotebookApp.ip = \"0.0.0.0\" " >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
 
 USER root
 # NASA CDF library
@@ -70,8 +69,6 @@ RUN mkdir /home/$NB_USER/envs && \
     virtualenv -p /usr/bin/python py27 && \
     virtualenv -p /usr/bin/python3 py36
 
-# activate by default py36 in the terminal
-RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate " >> /home/$NB_USER/.bashrc'
 
 COPY resources/helpers/setup_py27_env.sh .
 RUN /bin/bash -c 'bash setup_py27_env.sh && rm setup_py27_env.sh'
@@ -102,9 +99,17 @@ RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 RUN mkdir /home/$NB_USER/work
 WORKDIR /home/$NB_USER/work
 
+# Configuration of Jupiter lab/notebook user interface
+# activate by default py36 in the terminal:
+RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate " >> /home/$NB_USER/.bashrc'
+# To avoid error: OSError: [Errno 99] Cannot assign requested address
+RUN /bin/bash -c 'printf "c.NotebookApp.ip = \"0.0.0.0\" \n" >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
+# Only py36 and py27 should be available for the user:
+RUN /bin/bash -c 'printf "c.KernelSpecManager.whitelist = [\"py36\", \"py27\"]\n" >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
+
 USER root
 # Remove apt cache to make the image smaller
-#RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*
 RUN /bin/bash -c 'rm -rf /home/$NB_USER/build && rm -rf /home/$NB_USER/.wget-hsts'
 
 USER $NB_USER
