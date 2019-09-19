@@ -12,7 +12,9 @@ echo "**** Installing python 2.7 packages ****"
 source /home/$NB_USER/envs/py27/bin/activate
 
 # upgrade pip
-pip install pip==19.1.1
+pip install pip==19.2.3
+pip install wheel ipython ipykernel
+python -m ipykernel install --user --name py27 --display-name "py27"
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -45,9 +47,6 @@ pip install -U paramiko==2.4.2 \
 
 # Custom pip installation for any package that needs it
 LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
-
-pip install ipykernel
-python -m ipykernel install --user --name py27 --display-name "py27"
 
 deactivate
 
