@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+MAINTAINER "Ingeo Team" <ingeo-team@ingeo.datatransport.org>
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update --fix-missing -y
 
@@ -24,19 +26,6 @@ RUN apt-get install -y --no-install-recommends python2.7 \
     libdb-dev \
     python3-tk python-tk
 
-
-#RUN apt-get install -y --no-install-recommends python2.7 \
-#    python-setuptools python3-setuptools \
-#    python-pip python3-pip \
-#    python-dev python3-dev \
-#    python3-numpy \
-#    libproj-dev proj-data proj-bin \
-#    libgeos++-dev libgeos-dev \
-#    libdb-dev \
-#    python3-tk python-tk
-#
-
-LABEL maintainer="Pablo Reyes <pablo.reyes@sri.com>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
@@ -53,17 +42,10 @@ ARG BUILD=/home/$NB_USER/build
 RUN mkdir -p $BUILD
 WORKDIR $BUILD
 
-COPY resources/helpers/setup_py36_env.sh .
-RUN /bin/bash -c 'bash setup_py36_env.sh && rm setup_py36_env.sh'
-
-COPY resources/helpers/setup_py27_env.sh .
-RUN /bin/bash -c 'bash setup_py27_env.sh && rm setup_py27_env.sh'
-
 USER root
 # NASA CDF library
 # dependency:
 RUN apt-get install -y libncurses5-dev
-USER $NB_USER
 COPY resources/helpers/install_CDF.sh .
 COPY resources/cdf.sh /etc/profile.d
 RUN /bin/bash -c 'bash install_CDF.sh && \
@@ -71,6 +53,13 @@ RUN /bin/bash -c 'bash install_CDF.sh && \
 RUN /bin/bash -c 'rm install_CDF.sh'
 
 # now user stuff
+USER $NB_USER
+
+COPY resources/helpers/setup_py36_env.sh .
+RUN /bin/bash -c 'bash setup_py36_env.sh && rm setup_py36_env.sh'
+
+COPY resources/helpers/setup_py27_env.sh .
+RUN /bin/bash -c 'bash setup_py27_env.sh && rm setup_py27_env.sh'
 
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
