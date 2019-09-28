@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
-MAINTAINER "Ingeo Team" <ingeo-team@ingeo.datatransport.org>
+LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
+LABEL description="The core docker image used by resen."
 
 #--------------------------------------------------
 # First, make sure we have some of the things that
