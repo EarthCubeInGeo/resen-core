@@ -3,7 +3,7 @@
 #
 #    A helper script for installing davitpy
 #
-#    Assumes you have conda installed with a py27 virtual environment
+#    Assumes you have a py27 python virtual environment
 #
 #######################################################################################
 

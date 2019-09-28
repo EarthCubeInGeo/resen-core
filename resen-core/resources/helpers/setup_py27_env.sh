@@ -3,18 +3,12 @@
 #
 #    A helper script for setting up a python 2.7 environment
 #
-#    Assumes you have conda >= 4.6.8
-#
 #######################################################################################
 
 echo "**** Installing python 2.7 packages ****"
 
-source /home/$NB_USER/envs/py27/bin/activate
-
 # upgrade pip
 pip install pip==19.2.3
-pip install wheel ipython ipykernel
-python -m ipykernel install --user --name py27 --display-name "py27"
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -43,10 +37,19 @@ pip install -U paramiko==2.4.2 \
                madrigalweb==3.1.10 \
                pyproj==1.9.6 \
                cartopy==0.17.0 \
-               bsddb3==6.2.6
+               bsddb3==6.2.6 \
+               aacgmv2==2.5.2 \
+               pymap3d==1.8.1
 
 # Custom pip installation for any package that needs it
-LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
+pip install apexpy==1.0.3  # have to install after installing numpy
 
-deactivate
+pip install spacepy==0.2.0
+source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
+python -c "import spacepy.toolbox; spacepy.toolbox.update()"
 
+# Installing mangopy (14 June 2018)
+pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
+
+# cleanup
+rm -rf ~/.cache/pip/*

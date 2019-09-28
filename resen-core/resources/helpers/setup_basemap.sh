@@ -1,10 +1,9 @@
 #!/bin/bash
 #######################################################################################
 #
-#    A helper script for installing spacepy
+#    A helper script for installing basemap
 #
-#    Assumes you have conda installed with a py27 virtual environment
-#    and another environment with the name py36
+#    Assumes you have py27 and py36 python virtual environments
 #
 #######################################################################################
 
