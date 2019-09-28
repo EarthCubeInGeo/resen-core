@@ -213,3 +213,4 @@ RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 
 # Finally set up some stuff to make user experience better
 ENV TERM=xterm-256color 
 ENV SHELL=/bin/bash
+ENV MPLBACKEND Agg
