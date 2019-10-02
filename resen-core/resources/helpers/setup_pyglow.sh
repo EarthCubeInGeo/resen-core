@@ -10,7 +10,8 @@
 
 echo "**** Installing pyglow ****"
 
-export LANG=C.UTF-8
+# LANG=C.UTF-8
+# echo "LANG=C.UTF-8" >> /home/$NB_USER/.bashrc
 
 cd $BUILD
 PYGLOW_BUILD_DIR=pyglow_build

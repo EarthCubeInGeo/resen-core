@@ -19,3 +19,5 @@ make OS=linux ENV=gnu all
 make INSTALLDIR=/usr/local install
 cd ..
 rm -rf $CDF_TAR_FILE
+
+echo "if [ -z \$CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >> /home/$NB_USER/.bashrc

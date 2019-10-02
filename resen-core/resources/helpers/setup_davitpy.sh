@@ -29,3 +29,7 @@ deactivate
 # cleanup
 cd $BUILD
 rm -rf $DAVITPY_BUILD_DIR
+
+# set nessisary environment variables
+echo "SD_HDWPATH=/home/$NB_USER/cache/hdw.dat" >> /home/$NB_USER/.bashrc
+echo "SD_RADAR=/home/$NB_USER/cache/radar.dat" >> /home/$NB_USER/.bashrc
