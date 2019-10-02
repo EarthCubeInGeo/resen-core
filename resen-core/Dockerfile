@@ -175,8 +175,8 @@ RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh && \
 #RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
 # Install pyglow
-#COPY resources/helpers/setup_pyglow.sh .
-#RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
+COPY resources/helpers/setup_pyglow.sh .
+RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
 # create work directory for user
 RUN mkdir /home/$NB_USER/work
@@ -206,9 +206,9 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
-COPY resources/notebookapp.patch .
-RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
+# # patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
+# COPY resources/notebookapp.patch .
+# RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
 
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \

@@ -10,6 +10,8 @@
 
 echo "**** Installing pyglow ****"
 
+export LANG=C.UTF-8
+
 cd $BUILD
 PYGLOW_BUILD_DIR=pyglow_build
 
