@@ -166,9 +166,9 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 
 # Install davitpy (only works on python2.7):
 COPY resources/helpers/setup_davitpy.sh .
-RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
-ENV SD_HDWPATH=/home/$NB_USER/cache/hdw.dat
-ENV SD_RADAR=/home/$NB_USER/cache/radar.dat
+RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh && \
+                  echo "SD_HDWPATH=/home/$NB_USER/cache/hdw.dat" >> /home/$NB_USER/.bashrc && \
+                  echo "SD_RADAR=/home/$NB_USER/cache/radar.dat" >> /home/$NB_USER/.bashrc'
 
 # Install spacepy
 #COPY resources/helpers/setup_spacepy.sh .
@@ -212,6 +212,6 @@ RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 
     /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
 
 # Finally set up some stuff to make user experience better
-ENV TERM=xterm-256color 
-ENV SHELL=/bin/bash
-ENV MPLBACKEND Agg
+RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
+    echo "SHELL=/bin/bash" >> /home/$NB_USER/.bashrc && \
+    echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc
