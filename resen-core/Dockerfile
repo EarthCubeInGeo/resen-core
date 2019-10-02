@@ -34,7 +34,6 @@ RUN cd /usr/local/bin && \
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
-    # echo "LANG=C.UTF-8" >> /etc/
 
 # Add a script that we will use to correct permissions after running certain commands
 ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
@@ -67,10 +66,6 @@ RUN chmod +x /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start-notebook.sh && \
     chmod +x /usr/local/bin/start-singleuser.sh
 
-#COPY jupyter/jupyter_notebook_config.py /etc/jupyter/
-
-# Fix permissions on /etc/jupyter as root
-#RUN fix-permissions /etc/jupyter/
 
 #stuff from jupyter/scipy-notebook
 RUN apt-get update && apt-get install -yq --no-install-recommends \
@@ -143,9 +138,6 @@ WORKDIR $BUILD
 USER root
 COPY resources/helpers/install_CDF.sh .
 COPY resources/cdf.sh /etc/profile.d
-# RUN /bin/bash -c 'bash install_CDF.sh && \
-#     echo "if [ -z \$CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >> /home/$NB_USER/.bashrc'
-# RUN /bin/bash -c 'rm install_CDF.sh'
 RUN /bin/bash -c 'bash install_CDF.sh && rm install_CDF.sh'
 
 
@@ -172,13 +164,6 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 # Install davitpy (only works on python2.7):
 COPY resources/helpers/setup_davitpy.sh .
 RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
-# RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh && \
-#                   echo "SD_HDWPATH=/home/$NB_USER/cache/hdw.dat" >> /home/$NB_USER/.bashrc && \
-#                   echo "SD_RADAR=/home/$NB_USER/cache/radar.dat" >> /home/$NB_USER/.bashrc'
-
-# Install spacepy
-#COPY resources/helpers/setup_spacepy.sh .
-#RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
 
 # Install pyglow
 COPY resources/helpers/setup_pyglow.sh .
@@ -189,13 +174,10 @@ RUN mkdir /home/$NB_USER/work
 
 # set default python environment to py36
 RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate" >> /home/$NB_USER/.bashrc'
-# To avoid error: OSError: [Errno 99] Cannot assign requested address
-#RUN /bin/bash -c 'printf "c.NotebookApp.ip = \"0.0.0.0\" \n" >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
 
 # remove python3 kernel from showing up in jupyter
 RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
                   yes | jupyter kernelspec remove python3'
-#RUN /bin/bash -c 'printf "c.KernelSpecManager.ensure_native_kernel = False\n" >> /home/$NB_USER/.jupyter/jupyter_notebook_config.py'
 
 # post installation stuff
 # cleanup
@@ -205,8 +187,6 @@ RUN rm -r $BUILD && \
     rm /home/$NB_USER/.wget-hsts && \
     rm -rf /var/lib/apt/lists/*
 
-# RUN echo "SHELL=/bin/bash" >> /etc/environment
-
 USER $NB_USER
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
@@ -214,11 +194,7 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# # patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
-# COPY resources/notebookapp.patch .
-# RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
 
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
-    # echo "SHELL=/bin/bash" >> /home/$NB_USER/.bashrc && \
     echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc
