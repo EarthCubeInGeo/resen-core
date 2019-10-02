@@ -206,10 +206,9 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# NB_USER doesn't have root access, so move the mlocate database
-RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 0 -o ~/.locate.db\"" >>  ~/.bashrc && \
-    echo "alias locate=\"/usr/bin/locate -d ~/.locate.db\"" >>  ~/.bashrc && \
-    /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
+# patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
+COPY resources/notebookapp.patch .
+RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
 
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
