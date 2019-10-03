@@ -23,5 +23,6 @@ pip install .
 deactivate
 
 # cleanup
-rm -rf basemap-1.2.0rel
+cd ..
+rm -rf basemap-1.2.0rel v1.2.0rel.tar.gz
 rm ${HOME}/.wget-hsts

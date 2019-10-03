@@ -8,8 +8,8 @@
 #######################################################################################
 
 source ${HOME}/envs/py27/bin/activate
-
-DAVITPY_BUILD_DIR=davitpy_build
+CURDIR=$(pwd)
+DAVITPY_BUILD_DIR=${CURDIR}/davitpy_build
 
 git clone https://github.com/vtsuperdarn/davitpy.git $DAVITPY_BUILD_DIR
 cd $DAVITPY_BUILD_DIR
@@ -26,6 +26,7 @@ wget https://raw.githubusercontent.com/SuperDARN/rst/v4.2/tables/superdarn/radar
 deactivate
 
 # cleanup
+cd ${CURDIR}
 rm -rf $DAVITPY_BUILD_DIR
 rm ${HOME}/.wget-hsts
 
