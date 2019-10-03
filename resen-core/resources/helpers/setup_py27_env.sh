@@ -14,6 +14,7 @@ pip install pip==19.2.3
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
 pip install -U paramiko==2.4.2 \
                ipython==5.8.0 \
+               prompt_toolkit==1.0.16 \
                pymongo==3.7.2 \
                mechanize==0.4.1 \
                cryptography==2.6.1 \
