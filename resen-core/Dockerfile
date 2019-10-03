@@ -24,13 +24,15 @@ RUN apt-get update && apt-get -yq dist-upgrade && \
     sudo \
     locales \
     fonts-liberation \
-    run-one
+    run-one && \
+    rm -rf /var/lib/apt/lists/*
 
 # install tini
 ARG TINI_VERSION="v0.18.0"
 RUN cd /usr/local/bin && \
     wget https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
-    chmod +x /usr/local/bin/tini
+    chmod +x /usr/local/bin/tini && \
+    rm /root/.wget-hsts
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
@@ -72,7 +74,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     build-essential \
     emacs \
     git \
-    inkscape \
     jed \
     libsm6 \
     libxext-dev \
@@ -89,7 +90,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-xetex \
     tzdata \
     unzip \
-    nano
+    nano && \
+    rm -rf /var/lib/apt/lists/*
 
 #---------------------------------------------------
 # Now we can install resen-core specific stuff like
@@ -105,10 +107,12 @@ RUN apt-get update && \
     bash-completion \
     gfortran \
     rsync \
-    mlocate
+    mlocate && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install python stuff
-RUN apt-get install -yq --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
     python2.7 python3.6 \
     python-virtualenv python3-virtualenv \
     python-setuptools python3-setuptools \
@@ -116,11 +120,14 @@ RUN apt-get install -yq --no-install-recommends \
     libproj-dev proj-data proj-bin \
     libgeos++-dev libgeos-dev \
     libdb-dev \
-    python-tk python3-tk
+    python-tk python3-tk && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install system libraries needed by python packages
-RUN apt-get install -yq --no-install-recommends \
-    libncurses5-dev
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    libncurses5-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create python 2.7 and python 3.6 virtual environments
 USER $NB_USER
@@ -128,11 +135,7 @@ RUN /bin/bash -c 'mkdir -p /home/$NB_USER/envs && \
         python3 -m virtualenv -p /usr/bin/python3.6 /home/$NB_USER/envs/py36 && \
         python3 -m virtualenv -p /usr/bin/python2.7 /home/$NB_USER/envs/py27'
 
-# set up a build directory
-ARG BUILD=/home/$NB_USER/build
-RUN mkdir -p $BUILD
-WORKDIR $BUILD
-
+WORKDIR /home/$NB_USER
 
 # Install the NASA CDF library
 USER root
@@ -158,6 +161,11 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py27/bin/activate && \
                    pip install ipykernel==5.1.1 && \
                    python -m ipykernel install --user --name py36 --display-name "py36"'
 
+# remove python3 kernel from showing up in jupyter
+RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
+                  yes | jupyter kernelspec remove python3'
+
+# Install basemap
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 
@@ -175,25 +183,12 @@ RUN mkdir /home/$NB_USER/work
 # set default python environment to py36
 RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate" >> /home/$NB_USER/.bashrc'
 
-# remove python3 kernel from showing up in jupyter
-RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
-                  yes | jupyter kernelspec remove python3'
-
 # post installation stuff
-# cleanup
-WORKDIR /home/$NB_USER
-USER root
-RUN rm -r $BUILD && \
-    rm /home/$NB_USER/.wget-hsts && \
-    rm -rf /var/lib/apt/lists/*
-
-USER $NB_USER
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
-
 
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
