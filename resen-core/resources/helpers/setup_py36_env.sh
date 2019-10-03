@@ -42,15 +42,14 @@ pip install -U jupyterhub==1.0.0 \
                bsddb3==6.2.6 \
                aacgmv2==2.5.2 \
                pymap3d==2.1.0
+               astropy==3.2.1
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
 
-# Need to install spacepy from specific commit (see https://github.com/spacepy/spacepy/issues/203#issuecomment-536112039)
-pip install git+https://github.com/spacepy/spacepy.git@736df223a067574f9f87c2697f61d17eb39898a3
+pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
 python -c "import spacepy.toolbox; spacepy.toolbox.update()"
-echo "support_notice: False" >> ~/.spacepy/spacepy.rc
 
 # Installing mangopy (14 June 2018)
 pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
