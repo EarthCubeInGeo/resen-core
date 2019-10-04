@@ -50,6 +50,8 @@ pip install apexpy==1.0.3  # have to install after installing numpy
 pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
 python -c "import spacepy.toolbox; spacepy.toolbox.update()"
+# spacepy 0.2.1 doesn't clean up this file. Submitted issue and PR to spacepy, see https://github.com/spacepy/spacepy/pull/219
+rm OMNI_OMNI2_merged_20120213-v1.cdf
 
 # Installing mangopy (14 June 2018)
 pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
