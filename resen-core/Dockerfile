@@ -154,16 +154,17 @@ COPY resources/helpers/setup_py27_env.sh .
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py27/bin/activate && bash setup_py27_env.sh && rm setup_py27_env.sh'
 
 # register python environments with ipykernel
-RUN /bin/bash -cl 'source /home/$NB_USER/envs/py27/bin/activate && \
-                   pip install ipykernel==4.10.0 && \
-                   python -m ipykernel install --user --name py27 --display-name "py27" && \
-                   source /home/$NB_USER/envs/py36/bin/activate && \
-                   pip install ipykernel==5.1.1 && \
-                   python -m ipykernel install --user --name py36 --display-name "py36"'
+RUN /bin/bash -c 'source /home/$NB_USER/envs/py27/bin/activate && \
+                  pip install ipykernel==4.10.0 && \
+                  python -m ipykernel install --user --name py27 --display-name "py27"'
+
+RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
+                  pip install ipykernel==5.1.1 && \
+                  python -m ipykernel install --user --name py36 --display-name "py36"'
 
 # remove python3 kernel from showing up in jupyter
-RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
-                  yes | jupyter kernelspec remove python3'
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
+                   yes | jupyter kernelspec remove python3'
 
 # Install basemap
 COPY resources/helpers/setup_basemap.sh .
