@@ -1,140 +1,196 @@
-#####################################################################################
-#
-# Rules:
-# 1) do not modify the conda base environment python packages
-# 2) use scripts to install enviroments and packages
-# 3) install system packages with conda (for portability outside of docker)
-#
-#####################################################################################
+FROM ubuntu:18.04
 
-FROM jupyter/scipy-notebook
+LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
+LABEL description="The core docker image used by resen."
 
-MAINTAINER "Ingeo Team" <ingeo-team@ingeo.datatransport.org>
+#--------------------------------------------------
+# First, make sure we have some of the things that
+# jupyter/scipy-notebook has in it
+#--------------------------------------------------
+# stuff from jupyter/base-notebook
 
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
 
-# Create cache directories and prepare for building
-USER $NB_USER 
-
-ENV BUILD $HOME/build
-ENV MPLBACKEND Agg
-
-RUN mkdir -p $HOME/cache && \
-    mkdir -p $BUILD 
-
-#    mkdir -p $HOME/examples && \
-#    mkdir -p $HOME/cache/omni && \
-#    mkdir -p $HOME/cache/ssies && \
-
-WORKDIR /home/$NB_USER/build 
-
-
-# Do root user stuffs: install OS packages, install other packages
 USER root
 
-# OS packages that make working easier
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get -yq dist-upgrade && \
+    apt-get install -yq --no-install-recommends \
+    wget \
+    bzip2 \
+    ca-certificates \
+    sudo \
+    locales \
+    fonts-liberation \
+    run-one && \
+    rm -rf /var/lib/apt/lists/*
+
+# install tini
+ARG TINI_VERSION="v0.18.0"
+RUN cd /usr/local/bin && \
+    wget https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
+    chmod +x /usr/local/bin/tini && \
+    rm /root/.wget-hsts
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+
+# Add a script that we will use to correct permissions after running certain commands
+ADD jupyter/fix-permissions /usr/local/bin/fix-permissions
+RUN chmod +x /usr/local/bin/fix-permissions
+
+# Enable prompt color in the skeleton .bashrc before creating the default NB_USER
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
+
+# Create NB_USER wtih name jovyan user with UID=1000 and in the 'users' group
+# and make sure these dirs are writable by the `users` group.
+RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
+    sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
+    sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
+    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
+    chmod g+w /etc/passwd && \
+    fix-permissions $HOME
+
+# Configure container startup
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["start-notebook.sh"]
+
+# Set up system environment variables
+COPY resources/02-resen.sh /etc/profile.d/
+
+# Add scripts for starting servers
+COPY jupyter/start.sh /usr/local/bin/
+COPY jupyter/start-notebook.sh /usr/local/bin/
+COPY jupyter/start-singleuser.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start.sh && \
+    chmod +x /usr/local/bin/start-notebook.sh && \
+    chmod +x /usr/local/bin/start-singleuser.sh
+
+
+#stuff from jupyter/scipy-notebook
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    build-essential \
+    emacs \
+    git \
+    jed \
+    libsm6 \
+    libxext-dev \
+    libxrender1 \
+    lmodern \
+    netcat \
+    pandoc \
+    python-dev \
+    texlive-fonts-extra \
+    texlive-fonts-recommended \
+    texlive-generic-recommended \
+    texlive-latex-base \
+    texlive-latex-extra \
+    texlive-xetex \
+    tzdata \
+    unzip \
+    nano && \
+    rm -rf /var/lib/apt/lists/*
+
+#---------------------------------------------------
+# Now we can install resen-core specific stuff like
+# python packages, other software, etc.
+#---------------------------------------------------
+
+# Install some system utilities
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    mlocate \
-    less \
-    vim \
-    libncurses5-dev \
-    patch
+    apt-get install -yq --no-install-recommends \
+    less vim zip \
+    curl \
+    autoconf libtool pkg-config \
+    bash-completion \
+    gfortran \
+    rsync \
+    mlocate && \
+    rm -rf /var/lib/apt/lists/*
 
-# custom scripts
-COPY resources/start-singleuser-ingeo.sh /usr/local/bin
-COPY resources/nbstripout /usr/local/bin
+# Install python stuff
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    python2.7 python3.6 \
+    python-virtualenv python3-virtualenv \
+    python-setuptools python3-setuptools \
+    python-dev python3-dev \
+    libproj-dev proj-data proj-bin \
+    libgeos++-dev libgeos-dev \
+    libdb-dev \
+    python-tk python3-tk && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install NASA CDF from source
+# Install system libraries needed by python packages
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    libncurses5-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create python 2.7 and python 3.6 virtual environments
+USER $NB_USER
+RUN /bin/bash -c 'mkdir -p /home/$NB_USER/envs && \
+        python3 -m virtualenv -p /usr/bin/python3.6 /home/$NB_USER/envs/py36 && \
+        python3 -m virtualenv -p /usr/bin/python2.7 /home/$NB_USER/envs/py27'
+
+WORKDIR /home/$NB_USER
+
+# Install the NASA CDF library
+USER root
 COPY resources/helpers/install_CDF.sh .
 COPY resources/cdf.sh /etc/profile.d
-# the following is needed so that CDF_LIB is defined even if we use bash without logging in
-RUN /bin/bash -c 'bash install_CDF.sh && \
-                  echo "if [ -z \$CDF_LIB ]; then source /usr/local/bin/definitions.B; fi" >>  /home/jovyan/.bashrc'
-RUN /bin/bash -c 'rm install_CDF.sh'
+RUN /bin/bash -c 'bash install_CDF.sh && rm install_CDF.sh'
 
-# Ok, now do user stuff
+
+# Now install all python packages
 USER $NB_USER
 
-# Move conda's envs directory into user home directory
-# might make things easier from a persistence point of view
-RUN /bin/bash -cl 'mkdir ~/envs && rm -rf /opt/conda/envs && ln -s ~/envs /opt/conda/envs'
-
-# Update conda and pip
-RUN /bin/bash -cl 'conda install -y -n base conda==4.6.14'
-RUN /bin/bash -cl 'conda init'
-RUN /bin/bash -cl 'pip install -U pip==19.1.1'
-
-# Set up Conda environments
-# python2.7
-COPY resources/helpers/setup_py27_env.sh .
-RUN /bin/bash -cl 'bash setup_py27_env.sh && rm setup_py27_env.sh'
-
-# python3.6
 COPY resources/helpers/setup_py36_env.sh .
-RUN /bin/bash -cl 'bash setup_py36_env.sh && rm setup_py36_env.sh'
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && bash setup_py36_env.sh && rm setup_py36_env.sh'
 
-# register environments with Jupyter
-RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && \
-                   conda activate py27 && \
-                   pip install ipykernel && \
-                   python -m ipykernel install --user --name py27 --display-name "py27" && \
-                   conda activate py36 && \
-                   pip install ipykernel && \
-                   python -m ipykernel install --user --name py36 --display-name "py36"'
+COPY resources/helpers/setup_py27_env.sh .
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py27/bin/activate && bash setup_py27_env.sh && rm setup_py27_env.sh'
 
-# install basemap v1.2.0rel
+# register python environments with ipykernel
+RUN /bin/bash -c 'source /home/$NB_USER/envs/py27/bin/activate && \
+                  pip install ipykernel==4.10.0 && \
+                  python -m ipykernel install --user --name py27 --display-name "py27"'
+
+RUN /bin/bash -c 'source /home/$NB_USER/envs/py36/bin/activate && \
+                  pip install ipykernel==5.1.1 && \
+                  python -m ipykernel install --user --name py36 --display-name "py36"'
+
+# remove python3 kernel from showing up in jupyter
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
+                   yes | jupyter kernelspec remove python3'
+
+# Install basemap
 COPY resources/helpers/setup_basemap.sh .
-RUN /bin/bash -cl 'bash setup_basemap.sh && rm setup_basemap.sh'
+RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 
-# install davitpy 0.8-master
+# Install davitpy (only works on python2.7):
 COPY resources/helpers/setup_davitpy.sh .
-RUN /bin/bash -cl 'bash setup_davitpy.sh && rm setup_davitpy.sh'
-# set davitpy environment variables
-ENV SD_HDWPATH=$HOME/cache/hdw.dat
-ENV SD_RADAR=$HOME/cache/radar.dat
+RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
 
-# install spacepy 0.1.6
-COPY resources/helpers/setup_spacepy.sh .
-RUN /bin/bash -cl 'bash setup_spacepy.sh && rm setup_spacepy.sh'
-
-# install pyglow
+# Install pyglow
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
-# DataFetcher python package and example notebook
-#COPY resources/FetchingDataFromManifest.ipynb /home/$NB_USER/examples
-#COPY resources/test_manifest.json /home/$NB_USER/examples
-#COPY resources/FetchData.tar.gz $PWD
-#RUN /bin/bash -c 'tar -zxf FetchData.tar.gz && \
-#                  source /opt/conda/etc/profile.d/conda.sh && \
-#                  conda activate py27 && \
-#                  pip install ./FetchData --no-deps'
+# create work directory for user
+RUN mkdir /home/$NB_USER/work
 
+# set default python environment to py36
+RUN /bin/bash -c 'echo "source /home/$NB_USER/envs/py36/bin/activate" >> /home/$NB_USER/.bashrc'
 
 # post installation stuff
-# cleanup
-WORKDIR /home/$NB_USER
-RUN /bin/bash -c 'rm -r $BUILD && rm /home/$NB_USER/.wget-hsts'
-
-# password-less login on jupyterhub when running locally.
-RUN /bin/bash -c 'source /opt/conda/etc/profile.d/conda.sh && \
-                  conda activate py36 && \
-                  pip install jupyterlab jupyterhub-dummyauthenticator'
-
-# patch jupyter notebook server (until https://github.com/jupyter/notebook/pull/4674 is merged and released)
-COPY resources/notebookapp.patch .
-RUN /bin/bash -cl 'patch /home/jovyan/envs/py36/lib/python3.6/site-packages/notebook/notebookapp.py notebookapp.patch && rm notebookapp.patch'
-
 # Download 110m scale cartopy data
 COPY resources/feature_download.py .
-RUN /bin/bash -cl 'source activate py36 && \
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-RUN /bin/bash -cl 'source /opt/conda/etc/profile.d/conda.sh && \
-                   conda activate py36 && yes | jupyter kernelspec uninstall python3'
-
-# NB_USER doesn't have root access, so move the mlocate database
-RUN /bin/bash -c 'echo "alias updatedb=\"/usr/bin/updatedb --require-visibility 0 -o ~/.locate.db\"" >>  ~/.bashrc && \
-    echo "alias locate=\"/usr/bin/locate -d ~/.locate.db\"" >>  ~/.bashrc && \
-    /usr/bin/updatedb --require-visibility 0 -o ~/.locate.db'
+# Finally set up some stuff to make user experience better
+RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
+    echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc
