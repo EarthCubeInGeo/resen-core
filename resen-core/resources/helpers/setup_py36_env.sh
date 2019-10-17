@@ -13,7 +13,7 @@ pip install pip==19.2.3
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
 pip install -U jupyterhub==1.0.0 \
-               jupyterlab==0.35.6 \
+               jupyterlab==1.1.4 \
                notebook==6.0.1 \
                paramiko==2.4.2 \
                ipython==7.4.0 \
