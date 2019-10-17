@@ -72,7 +72,6 @@ RUN chmod +x /usr/local/bin/start.sh && \
 #stuff from jupyter/scipy-notebook
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     build-essential \
-    emacs \
     git \
     jed \
     libsm6 \
@@ -89,8 +88,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-latex-extra \
     texlive-xetex \
     tzdata \
-    unzip \
-    nano && \
+    unzip && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_USER
