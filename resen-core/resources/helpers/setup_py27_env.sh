@@ -8,7 +8,7 @@
 echo "**** Installing python 2.7 packages ****"
 
 # upgrade pip
-pip install pip==19.2.3
+pip install pip==19.3.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -48,7 +48,8 @@ pip install apexpy==1.0.3  # have to install after installing numpy
 
 pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
-python -c "import spacepy.toolbox; spacepy.toolbox.update()"
+# only update omni and qin-denton since maia.usno.navy.mil/ser7/tai-utc.dat leapseconds website was down at the time...
+python -uc "import spacepy.toolbox; spacepy.toolbox.update(QDomni=True)"
 # spacepy 0.2.1 doesn't clean up this file. Submitted issue and PR to spacepy, see https://github.com/spacepy/spacepy/pull/219
 rm OMNI_OMNI2_merged_20120213-v1.cdf
 
