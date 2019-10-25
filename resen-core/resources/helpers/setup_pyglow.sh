@@ -8,34 +8,30 @@
 #
 #######################################################################################
 
-CONDA_BASE=$(conda info --base)
-source $CONDA_BASE/etc/profile.d/conda.sh
+echo "**** Installing pyglow ****"
 
-CWD=$(pwd)
+PYGLOW_BUILD_DIR=pyglow_build
 
-PYGLOW_BUILD_DIR=$CWD/mangopy_build
-mkdir -p $PYGLOW_BUILD_DIR
-
+git clone https://github.com/timduly4/pyglow.git $PYGLOW_BUILD_DIR
 cd $PYGLOW_BUILD_DIR
-git clone https://github.com/timduly4/pyglow.git
-cd pyglow
-#specific working commit from master that worked when creating this helper
-git checkout 83a055dae3aca540d0f862c7589a17fb14064e36 -b master_20190518_121258
+git checkout 054bf800263c01ecfa783741c9cfe8d3d6c259ca -b master_20190904
 
-conda activate py27
-pip install -r requirements.txt
-make -C src/pyglow/models source
-LDFLAGS="-shared" pip install .
-python -c "import pyglow"
-conda deactivate
+source ${HOME}/envs/py27/bin/activate
 
-conda activate py36
-pip install -r requirements.txt
 make -C src/pyglow/models source
-LDFLAGS="-shared" pip install .
+pip install .
 python -c "import pyglow"
-conda deactivate
+
+deactivate
+
+source ${HOME}/envs/py36/bin/activate
+
+make -C src/pyglow/models source
+pip install .
+python -c "import pyglow"
+
+deactivate
 
 # cleanup
-cd $CWD
+cd $BUILD
 rm -r $PYGLOW_BUILD_DIR

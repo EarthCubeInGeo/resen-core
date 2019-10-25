@@ -3,31 +3,19 @@
 #
 #    A helper script for setting up a python 3.6 environment
 #
-#    Assumes you have conda >= 4.6.8
-#
 #######################################################################################
 
-CONDA_BASE=$(conda info --base)
-source $CONDA_BASE/etc/profile.d/conda.sh
-
-# Set up and activate the python3.6 environment
-conda create --quiet --yes -n py36 python=3.6 pip=9.0.1
-
-# Install binaries from Conda that are needed for python packages below
-# linux only, can be swapped out for macosx and windows compilers as needed
-conda install --yes -n py36 -c conda-forge gcc_linux-64==7.3.0 gfortran_linux-64==7.3.0 gxx_linux-64==7.3.0
-# some of these are available for windows, some are not
-conda install --yes -n py36 -c conda-forge mpich==3.2.1 hdf5==1.10.1 proj4==4.9.3 geos==3.7.1 ncurses==6.1 libffi==3.2.1 libnetcdf==4.6.1 openssl==1.1.1b freetype==2.9.1 libpng==1.6.36
-#conda install --yes -n py36 -c anaconda libpng-devel-cos6-x86_64==1.2.49 
-
-conda activate py36
+echo "**** Installing python 3.6 packages ****"
 
 # upgrade pip
-pip install pip==19.1.1
+pip install pip==19.3.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
-pip install -U paramiko==2.4.2 \
+pip install -U jupyterhub==1.0.0 \
+               jupyterlab==1.1.4 \
+               notebook==6.0.1 \
+               paramiko==2.4.2 \
                ipython==7.4.0 \
                pymongo==3.7.2 \
                mechanize==0.4.1 \
@@ -49,26 +37,25 @@ pip install -U paramiko==2.4.2 \
                pyyaml==5.1 \
                cython==0.29.6 \
                pyproj==1.9.6 \
-               madrigalweb==3.1.10
+               madrigalweb==3.1.10 \
+               cartopy==0.17.0 \
+               bsddb3==6.2.6 \
+               aacgmv2==2.5.2 \
+               pymap3d==2.1.0
+               astropy==3.2.1
 
 # Custom pip installation for any package that needs it
-LDFLAGS="-shared" pip install -UI apexpy==1.0.3 # have to install after installing numpy
+pip install apexpy==1.0.3  # have to install after installing numpy
 
-# Shapely is a requisite for cartopy
-LDFLAGS="-shared" pip install -UI --no-binary :all: shapely==1.6.4.post2
+pip install spacepy==0.2.1
+source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
+# only update omni and qin-denton since maia.usno.navy.mil/ser7/tai-utc.dat leapseconds website was down at the time...
+python -uc "import spacepy.toolbox; spacepy.toolbox.update(QDomni=True)"
+# spacepy 0.2.1 doesn't clean up this file. Submitted issue and PR to spacepy, see https://github.com/spacepy/spacepy/pull/219
+rm OMNI_OMNI2_merged_20120213-v1.cdf
 
-# Installing cartopy
-LDFLAGS="-shared" pip install -UI --no-binary :all: cartopy==0.17.0
+# Installing mangopy (14 June 2018)
+pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
 
-# Installing mangopy
-pip install git+https://github.com/astib/MANGO.git@b25cba78e58197394809cb8323656a1d636c3e3d
-
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
-conda remove --quiet --yes -n py36 --force qt pyqt
-
-# clean up tarballs and cache
-conda clean -tipy
+# cleanup
 rm -rf ~/.cache/pip/*
-
-conda deactivate
