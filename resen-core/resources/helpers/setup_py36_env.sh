@@ -41,8 +41,12 @@ pip install -U jupyterhub==1.0.0 \
                cartopy==0.17.0 \
                bsddb3==6.2.6 \
                aacgmv2==2.5.2 \
-               pymap3d==2.1.0
-               astropy==3.2.1
+               pymap3d==2.1.0 \
+               astropy==3.2.1 \
+               sunpy==1.1.3 \
+               plasmapy==0.3.1 \
+               pydarn==1.0.0.1 \
+               viresclient==0.6.1
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy

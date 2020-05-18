@@ -41,7 +41,8 @@ pip install -U paramiko==2.4.2 \
                bsddb3==6.2.6 \
                aacgmv2==2.5.2 \
                pymap3d==1.8.1 \
-               astropy==2.0.14
+               astropy==2.0.14 \
+               sunpy==0.9.10
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
