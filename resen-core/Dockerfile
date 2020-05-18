@@ -6,7 +6,7 @@ LABEL description="The core docker image used by resen."
 ARG NB_USER="jovyan"
 
 #---------------------------------------------------
-# Install resen-core specific stuff like python 
+# Install resen-core specific stuff like python
 # packages, other software, etc.
 #---------------------------------------------------
 
@@ -83,10 +83,6 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
 # Install basemap
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
-
-# Install davitpy (only works on python2.7):
-COPY resources/helpers/setup_davitpy.sh .
-RUN /bin/bash -c 'bash setup_davitpy.sh && rm setup_davitpy.sh'
 
 # Install pyglow
 COPY resources/helpers/setup_pyglow.sh .
