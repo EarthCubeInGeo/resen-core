@@ -56,5 +56,8 @@ rm OMNI_OMNI2_merged_20120213-v1.cdf
 # Installing mangopy (14 June 2018)
 pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
 
+# Install visuamisr
+pip install git+https://github.com/asreimer/visuamisr.git@v2.0.3
+
 # cleanup
 rm -rf ~/.cache/pip/*
