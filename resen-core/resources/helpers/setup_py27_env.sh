@@ -37,7 +37,6 @@ pip install -U paramiko==2.4.2 \
                sciunit2==0.4.post3.dev95073526 \
                madrigalweb==3.1.10 \
                pyproj==1.9.6 \
-               cartopy==0.17.0 \
                bsddb3==6.2.6 \
                aacgmv2==2.5.2 \
                pymap3d==1.8.1 \
@@ -46,6 +45,8 @@ pip install -U paramiko==2.4.2 \
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
+
+pip install  cartopy==0.17.0
 
 pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB

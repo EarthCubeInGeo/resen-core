@@ -38,7 +38,6 @@ pip install -U jupyterhub==1.0.0 \
                cython==0.29.18 \
                pyproj==2.6.1.post1 \
                madrigalweb==3.1.12 \
-               cartopy==0.18.0 \
                bsddb3==6.2.7 \
                aacgmv2==2.6.0 \
                pymap3d==2.4.1 \
@@ -50,6 +49,8 @@ pip install -U jupyterhub==1.0.0 \
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
+
+pip install cartopy==0.18.0 # have to install after installing numpy
 
 pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
