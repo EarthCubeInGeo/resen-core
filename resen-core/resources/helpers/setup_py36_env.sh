@@ -8,7 +8,7 @@
 echo "**** Installing python 3.6 packages ****"
 
 # upgrade pip
-pip install pip==20.1
+pip install pip==20.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -22,7 +22,7 @@ pip install -U jupyterhub==1.0.0 \
                cryptography==2.9.2 \
                pytest==5.4.2 \
                nbformat==5.0.6 \
-               numpy==1.16.2 \
+               numpy==1.18.4 \
                matplotlib==3.2.1 \
                scipy==1.4.1 \
                tables==3.6.1 \
