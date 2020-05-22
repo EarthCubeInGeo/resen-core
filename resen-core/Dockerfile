@@ -109,7 +109,8 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
 
 # Installing jupyter-widgets
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
-                   pip install ipympl && \
+                   pip install ipympl==0.5.6 && \
+                   pip install hdfviewer==0.11.0 && \
                    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
                    jupyter labextension install jupyter-matplotlib'
 
@@ -123,3 +124,6 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    jupyter lab --generate-config'
 RUN sed -i -e 's/#c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
 
+# Set the jupyterlab user-settings
+RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
+                 echo  "{\"disclaimed\": false,\"enabled\":false}" > /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings'
