@@ -43,11 +43,17 @@ RUN apt-get update && \
     libncurses5-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Install nodejs and npm needed for matplotlib widgets
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -yq --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
 # Create python 2.7 and python 3.6 virtual environments
 USER $NB_USER
 RUN /bin/bash -c 'mkdir -p /home/$NB_USER/envs && \
         python3 -m virtualenv -p /usr/bin/python3.6 /home/$NB_USER/envs/py36 && \
         python3 -m virtualenv -p /usr/bin/python2.7 /home/$NB_USER/envs/py27'
+
 
 WORKDIR /home/$NB_USER
 
@@ -101,7 +107,15 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
+# Installing jupyter-widgets
+RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
+                   pip install ipympl==0.5.6 && \
+                   pip install hdfviewer==0.11.0 && \
+                   jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
+                   jupyter labextension install jupyter-matplotlib'
+
 # Finally set up some stuff to make user experience better
+
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
     echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc
 
@@ -109,3 +123,7 @@ RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    jupyter lab --generate-config'
 RUN sed -i -e 's/#c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
+
+# Set the jupyterlab user-settings
+RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
+                 echo  "{\"disclaimed\": false,\"enabled\":false}" > /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings'
