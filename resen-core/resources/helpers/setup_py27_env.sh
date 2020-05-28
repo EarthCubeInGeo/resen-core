@@ -8,7 +8,7 @@
 echo "**** Installing python 2.7 packages ****"
 
 # upgrade pip
-pip install pip==19.3.1
+pip install pip==20.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
