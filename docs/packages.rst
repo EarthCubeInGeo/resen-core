@@ -1,3 +1,5 @@
+.. _Python Packages:
+
 Python Packages Available in Resen-core
 =======================================
 
