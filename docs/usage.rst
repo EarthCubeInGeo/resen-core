@@ -3,6 +3,12 @@ Usage
 
 Specific versions of resen-core are available through `resen`_. When creating a `bucket`_ the user is asked to select a specific resen-core version to base the `bucket`_ on.
 
+Downloading a resen-core image
+==============================
+
+Currently, the resen-core images can be downloaded from `earchcubeingeo`_ on `dockerhub`_.
+
+
 Using a resen-core image without the `resen`_ tool
 ==================================================
 
@@ -17,3 +23,5 @@ There might be times when there is the need to use a resen-core image without th
 .. _resen: https://resen.readthedocs.io/en/latest
 .. _bucket: https://resen.readthedocs.io/en/latest/usage.html#setup-a-new-bucket
 .. _docker: https://www.docker.com
+.. _dockerhub: https://hub.docker.com
+.. _earchcubeingeo: https://hub.docker.com/r/earthcubeingeo/resen-core
