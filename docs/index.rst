@@ -1,1 +1,6 @@
-.. include:: ../README.rst
+.. toctree::
+   :maxdepth: 3
+
+   readme
+   usage
+   packages
