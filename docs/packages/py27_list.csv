@@ -1,0 +1,24 @@
+﻿Package,Version,Application,Source
+aacgmv2,2.5.2,AACGM magnetic coordinate system,https://pypi.org/project/aacgmv2/
+apexpy,1.0.3,Apex magnetic coordinate system,https://pypi.org/project/apexpy/
+astropy,2.0.14,Packages for use in astronomy,https://www.astropy.org/
+basemap,1.2.0,Mapping,https://matplotlib.org/basemap/
+bokeh,1.0.4,Interactive visualization library,https://bokeh.pydata.org/en/latest/
+cartopy,0.17.0,Mapping,https://scitools.org.uk/cartopy/docs/latest/
+davitpy,0.8,SuperDARN data analysis,http://davit.ece.vt.edu/davitpy/
+h5py,2.9.0,HDF5 binary data format,https://www.h5py.org/
+madrigalweb,3.1.10,Accessing the Madrigal database,http://cedar.openmadrigal.org/docs/name/rr_python.html
+mangopy,0.1,MANGO data analysis,https://github.com/astib/MANGO
+matplotlib,2.2.4,Basic plotting,https://matplotlib.org/
+netcdf4,1.4.3,netCDF4 data format,https://unidata.github.io/netcdf4-python/netCDF4/index.html
+numpy,1.16.2,Numerical array handling,http://www.numpy.org/
+pandas,0.24.2,Data analysis,https://pandas.pydata.org/
+pyglow,0.0.0,Upper atmosphere climatological models,https://github.com/timduly4/pyglow
+pymongo,3.7.2,Tools for working with MongoDB,https://api.mongodb.com/python/current/
+scipy,1.2.1,Advanced mathematical operations,https://www.scipy.org/
+sciunit2,0.4.post3.dev95073526,Package computational experiments for reproducability,https://sciunit.run/
+sgp4,1.4,Propagation of satellite TLEs,https://pypi.org/project/sgp4/
+spacepy,0.2.1,Data analysis tools for space-based datasets,https://pythonhosted.org/SpacePy/
+sqlalchemy,1.3.1,Database tool kit,https://www.sqlalchemy.org/
+sympy,1.1,Symbolic computation,https://www.sympy.org/en/index.html
+tables,3.5.1,HDF5 binary data format,https://pypi.org/project/tables/
