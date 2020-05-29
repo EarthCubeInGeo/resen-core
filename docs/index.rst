@@ -6,6 +6,10 @@ Linux image and comes preinstalled with a stack of commonly used geospace
 libraries and software packages. For a list of all the packages installed
 in this version of resen-core can be found here: :ref:`Python Packages`.
 
+Source Code
+===========
+
+The source code can be found in the `GitHub` repository `resen-core`_.
 
 Contents
 ========
@@ -24,3 +28,4 @@ Changelog
 
 
 .. _resen: https://resen.readthedocs.io/en/latest
+.. _resen-core: https://github.com/EarthCubeInGeo/resen-core
