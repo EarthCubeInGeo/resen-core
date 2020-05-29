@@ -41,8 +41,31 @@ should be available in the user's docker list::
     $ docker images
 
     REPOSITORY      TAG        IMAGE ID            CREATED             SIZE
-    resen/testing   latest     5431trew4r123     2 hours ago         5.38GB
+    resen/testing   latest     5431trew4r12     2 hours ago         5.38GB
 
+
+Resen-base
+----------
+
+The resen-core images are based on resen-base docker image which `Dockerfile`
+is located inside the resen-base folder in the `resen_core`_ `GitHub`
+repository. The resen-base in turn is based on the ubuntu:18.04 docker image
+found in `ubuntu Docker Official Images`_.
+
+resen-core Dockerfile helpers
+-----------------------------
+
+Resen-core uses additonal files (helpers) that are called as part of the
+instructions in the `Dockerfile` The helpers are located inside the folder
+resen-core/resources/helpers::
+
+- install_CDF.sh
+- setup_basemap.sh
+- setup_cartopy.sh
+- setup_davitpy.sh
+- setup_py27_env.sh
+- setup_py36_env.sh
+- setup_spacepy.sh
 
 Using a resen-core image without the `resen`_ tool
 ==================================================
@@ -67,3 +90,4 @@ where `XXXX` is the port to be used for `jupyterlab`.
 .. _dockerhub: https://hub.docker.com
 .. _earchcubeingeo: https://hub.docker.com/r/earthcubeingeo/resen-core/tags
 .. _resen_core: https://github.com/EarthCubeInGeo/resen-core
+.. _ubuntu Docker Official Images: https://hub.docker.com/_/ubuntu?tab=tags
