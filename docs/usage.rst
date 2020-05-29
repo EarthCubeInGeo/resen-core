@@ -9,7 +9,7 @@ Tutorials
 =========
 
 Tutorials in form of jupyter notebooks can be found in the folder
-`resen-core/resources/tutorials`
+`tutorials`
 of the `resen_core`_ `GitHub` repository.
 
 
