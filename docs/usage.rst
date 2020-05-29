@@ -26,6 +26,23 @@ available in the users's system::
     REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
     earthcubeingeo/resen-core   2019.1.0            5300c6652851        7 months ago        4.45GB
 
+Building a resen-core image
+===========================
+
+Resen-core images `Dockerfile` can be found inside the resen-core folder in the
+`resen_core`_ `GitHub` repository. To build the image from the resen-core folder
+where the Dockerfile is located run::
+
+    $ docker build -t resen/testing .
+
+After a successful build, which can take some time, the newly created image
+should be available in the user's docker list::
+
+    $ docker images
+
+    REPOSITORY      TAG        IMAGE ID            CREATED             SIZE
+    resen/testing   latest     5431trew4r123     2 hours ago         5.38GB
+
 
 Using a resen-core image without the `resen`_ tool
 ==================================================
@@ -49,3 +66,4 @@ where `XXXX` is the port to be used for `jupyterlab`.
 .. _docker: https://www.docker.com
 .. _dockerhub: https://hub.docker.com
 .. _earchcubeingeo: https://hub.docker.com/r/earthcubeingeo/resen-core/tags
+.. _resen_core: https://github.com/EarthCubeInGeo/resen-core
