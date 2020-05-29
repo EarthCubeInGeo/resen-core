@@ -3,7 +3,9 @@
 Python Packages Available in Resen-core
 =======================================
 
-This version of resen-core includes two python virtual environments, py27 based on python2.7 and py36 based on python3.6. Below are the packates available in those virtual environments.
+This version of resen-core includes two python virtual environments, py27 based
+on python2.7 and py36 based on python3.6. Below are the packages available in
+those virtual environments.
 
 Python Packages included
 ------------------------
