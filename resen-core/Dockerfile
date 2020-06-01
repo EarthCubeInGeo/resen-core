@@ -94,6 +94,11 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
+# Install citationhelper
+COPY resources/helpers/setup_citationhelper.sh .
+COPY resources/pkg_citations.json /home/$NB_USER/cache/
+RUN /bin/bash -cl 'bash setup_citationhelper.sh && rm setup_citationhelper.sh'
+
 # create work directory for user
 RUN mkdir /home/$NB_USER/work
 
