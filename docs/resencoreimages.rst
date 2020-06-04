@@ -22,9 +22,10 @@ available in the users's system::
 Building a resen-core image
 ===========================
 
-Resen-core images `Dockerfile` can be found inside the resen-core folder in the
-`resen_core`_ `GitHub` repository. To build the image from the resen-core folder
-where the Dockerfile is located run::
+The sources for building a resen-core image are in the `resen_core`_ `GitHub`
+repository. The `Dockerfile` for the resen-core image can be found inside the
+resen-core folder in the repository. To build the image from the resen-core folder
+run::
 
     $ docker build -t resen/testing .
 

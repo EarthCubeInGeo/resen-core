@@ -10,12 +10,12 @@ those virtual environments.
 Python Packages included
 ------------------------
 
-.. csv-table:: py27 environment packages
-    :file: packages/py27_list.csv
+.. csv-table:: py36 environment packages
+    :file: packages/py36_list.csv
     :widths: 10, 10,40,40
     :header-rows: 1
 
-.. csv-table:: py36 environment packages
-    :file: packages/py36_list.csv
+.. csv-table:: py27 environment packages
+    :file: packages/py27_list.csv
     :widths: 10, 10,40,40
     :header-rows: 1
