@@ -8,7 +8,8 @@
 - Add visuamisr to py27 and py36 setup scripts
 - Remove davitpy
 - Update py36 packages versions
-- Adding %pylab widget capability
+- Add %pylab widget capability
+- Add citation helper utility
 
 
 2019.1.0 (2019-10-24)
