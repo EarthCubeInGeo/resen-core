@@ -10,9 +10,9 @@ can be used::
 
     $ docker pull earthcubeingeo/resen-core:2019.1.0
 
-After issuing the command, docker starts downloading the several layers
-contained in the image and when the process finishes the image will be
-available in the users's system::
+After issuing the command, docker starts downloading the layers
+contained in the image. When the process finishes the image will be
+available in the user's system::
 
     $ docker images
 
