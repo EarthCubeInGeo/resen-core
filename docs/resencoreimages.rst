@@ -1,12 +1,12 @@
 Resen-core images
 *****************
 
-Alternatively to accesing resen-cores images through `resen`_, the images can
-be pulled from `earchcubeingeo`_ on `dockerhub`_. The way `resen`_ obtains the
-selected resen-core image is to pull it from `dockerhub`_ and once the
-resen-core image has been pulled into the user's system it will be readily
-available and no downloading will be needed. To pull a resen-core image from
-`earchcubeingeo`_ the following `docker`_ command can be used::
+Alternatively to accessing resen-cores images through `resen`_, the images can
+be pulled from `earchcubeingeo`_ on `dockerhub`_ (this is how `resen`_ obtains the
+selected resen-core image).  Once the resen-core image has been pulled into the 
+user's system it will be readily available and not require downloading in the future. 
+To pull a resen-core image from `earchcubeingeo`_ the following `docker`_ command 
+can be used::
 
     $ docker pull earthcubeingeo/resen-core:2019.1.0
 
