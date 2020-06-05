@@ -22,3 +22,4 @@ spacepy,0.2.1,Data analysis tools for space-based datasets,https://pythonhosted.
 sqlalchemy,1.3.1,Database tool kit,https://www.sqlalchemy.org/
 sympy,1.1,Symbolic computation,https://www.sympy.org/en/index.html
 tables,3.5.1,HDF5 binary data format,https://pypi.org/project/tables/
+visuamisr,2.0.3,Read and visualize AMISR data,https://github.com/asreimer/visuamisr
