@@ -41,9 +41,9 @@ should be available in the user's docker list::
 Resen-base
 ----------
 
-The resen-core images are based on resen-base docker image which `Dockerfile`
+The resen-core images are based on the resen-base docker image, whos `Dockerfile`
 is located inside the resen-base folder in the `resen_core`_ `GitHub`
-repository. The resen-base in turn is based on the ubuntu:18.04 docker image
+repository. The resen-base image is in turn based on the ubuntu:18.04 docker image
 found in `ubuntu Docker Official Images`_.
 
 resen-core Dockerfile helpers
