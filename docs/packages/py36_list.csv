@@ -23,3 +23,4 @@ sqlalchemy,1.3.17,Database tool kit,https://www.sqlalchemy.org/
 sympy,1.5.1,Symbolic computation,https://www.sympy.org/en/index.html
 tables,3.6.1,HDF5 binary data format,https://pypi.org/project/tables/
 viresclient,0.6.1,Interface to access ESA's Swarm data and models,https://pypi.org/project/viresclient/
+visuamisr,2.0.3,Read and visualize AMISR data,https://github.com/asreimer/visuamisr
