@@ -18,8 +18,8 @@ Contents
    :maxdepth: 3
 
    usage
-   resencoreimages
    packages
+   resencoreimages
 
 Changelog
 ---------

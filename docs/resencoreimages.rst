@@ -1,5 +1,10 @@
+Notes for Developers
+********************
+
+Notes to create, build, and test resen-core images.
+
 Resen-core images
-*****************
+=================
 
 Alternatively to accessing resen-cores images through `resen`_, the images can
 be pulled from `earchcubeingeo`_ on `dockerhub`_ (this is how `resen`_ obtains the
