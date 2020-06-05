@@ -67,7 +67,7 @@ Using a resen-core image without the `resen`_ tool
 There might be times when there is the need to use a resen-core image without
 the `resen`_ tool, e.g. when a new image is being created and has not been
 integrated in the `resen`_ tool. To proceed you need `docker`_ installed in your
-system and enough resources allocated for the compilation. The following command
+system and enough resources allocated for compilation. The following command
 will start jupyter lab based on the resen-core image that was pulled previously
 , i.e. earthcubeingeo/resen-core:2019.1.0 ::
 
