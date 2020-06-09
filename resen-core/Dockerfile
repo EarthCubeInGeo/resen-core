@@ -94,6 +94,9 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
+# Install citationhelper
+COPY resources/pkg_citations.json /home/$NB_USER/cache/
+
 # create work directory for user
 RUN mkdir /home/$NB_USER/work
 
@@ -115,9 +118,9 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
                    jupyter labextension install jupyter-matplotlib'
 
 # Finally set up some stuff to make user experience better
-
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
-    echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc
+    echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc && \
+    echo "export CITEHELP_REFFILE=/home/$NB_USER/cache/pkg_citations.json" >> /home/$NB_USER/.bashrc
 
 # Set default jupyter terminal shell
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \

@@ -61,5 +61,8 @@ pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad6
 # Install visuamisr
 pip install git+https://github.com/asreimer/visuamisr.git@v2.0.3
 
+# Install citationhelper
+pip install git+https://github.com/EarthCubeInGeo/citationhelper.git@v0.2
+
 # cleanup
 rm -rf ~/.cache/pip/*
