@@ -60,11 +60,8 @@ resen-core/resources/helpers::
 
 - install_CDF.sh
 - setup_basemap.sh
-- setup_cartopy.sh
-- setup_davitpy.sh
 - setup_py27_env.sh
 - setup_py36_env.sh
-- setup_spacepy.sh
 
 Using a resen-core image without the `resen`_ tool
 ==================================================

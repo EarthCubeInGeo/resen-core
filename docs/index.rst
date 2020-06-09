@@ -19,7 +19,7 @@ Contents
 
    usage
    packages
-   resencoreimages
+   developers
 
 Changelog
 ---------
