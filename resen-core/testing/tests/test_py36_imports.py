@@ -18,7 +18,8 @@ class ImportTester(unittest.TestCase):
     packages = ['paramiko','IPython','pymongo','mechanize','netCDF4','cryptography','pytest',
                 'nbformat','numpy','matplotlib','scipy','tables','sgp4','pandas','sympy',
                 'sqlalchemy','h5py','pytz','bokeh','yaml','cython','apexpy','cartopy',
-                'spacepy','aacgmv2','pymap3d','mangopy']
+                'spacepy','aacgmv2','pymap3d','mangopy','madrigalWeb','visuamisr',
+                'citationhelper','viresclient','hdfviewer','watermark','pydarn','plasmapy']
 
     def test_imports(self):
         # Try to import all the packages
