@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:bionic-20200403
 
 LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
 LABEL description="The base docker image from which resen-core images are built."
