@@ -112,8 +112,6 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
 
 # Installing jupyter-widgets
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py36/bin/activate && \
-                   pip install ipympl==0.5.6 && \
-                   pip install hdfviewer==0.11.0 && \
                    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
                    jupyter labextension install jupyter-matplotlib'
 

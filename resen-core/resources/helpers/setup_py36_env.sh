@@ -45,6 +45,8 @@ pip install -U jupyterhub==1.0.0 \
                plasmapy==0.3.1 \
                pydarn==1.0.0.1 \
                viresclient==0.6.1 \
+               ipympl==0.5.6 \
+               hdfviewer==0.11.0 \
                watermark==2.0.2
 
 # Custom pip installation for any package that needs it
