@@ -47,7 +47,7 @@ pip install -U jupyterhub==1.0.0 \
                viresclient==0.6.1 \
                ipympl==0.5.6 \
                hdfviewer==0.11.0 \
-               # sunpy==1.1.3
+               watermark==2.0.2
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
