@@ -44,8 +44,8 @@ pip install -U jupyterhub==1.0.0 \
                astropy==3.2.1 \
                plasmapy==0.3.1 \
                pydarn==1.0.0.1 \
-               viresclient==0.6.1
-               # sunpy==1.1.3
+               viresclient==0.6.1 \
+               watermark==2.0.2
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
