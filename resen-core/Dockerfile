@@ -1,4 +1,4 @@
-FROM earthcubeingeo/resen-base:2019.1.0
+FROM earthcubeingeo/resen-base:2020.1.0
 
 LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
 LABEL description="The core docker image used by resen."
