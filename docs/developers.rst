@@ -13,7 +13,7 @@ user's system it will be readily available and not require downloading in the fu
 To pull a resen-core image from `earchcubeingeo`_ the following `docker`_ command 
 can be used::
 
-    $ docker pull earthcubeingeo/resen-core:2019.1.0
+    $ docker pull earthcubeingeo/resen-core:2020.1.0
 
 After issuing the command, docker starts downloading the layers
 contained in the image. When the process finishes the image will be
@@ -22,7 +22,7 @@ available in the user's system::
     $ docker images
 
     REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
-    earthcubeingeo/resen-core   2019.1.0            5300c6652851        7 months ago        4.45GB
+    earthcubeingeo/resen-core   2020.1.0            b1f1c9013924        1 day ago           5.25GB
 
 Building a resen-core image
 ===========================
@@ -73,7 +73,7 @@ system and enough resources allocated for compilation. The following command
 will start jupyter lab based on the resen-core image that was pulled previously
 , i.e. earthcubeingeo/resen-core:2019.1.0 ::
 
-    $ docker run --name a_container_name  -it -p XXXX:XXXX earthcubeingeo/resen-core:2019.1.0 /bin/bash -c 'source ~/envs/py36/bin/activate && jupyter lab --no-browser --ip 0.0.0.0 --port XXXX --NotebookApp.token=SOMETOKENWORD --KernelSpecManager.ensure_native_kernel=False'
+    $ docker run --name a_container_name  -it -p XXXX:XXXX earthcubeingeo/resen-core:2020.1.0 /bin/bash -c 'source ~/envs/py36/bin/activate && jupyter lab --no-browser --ip 0.0.0.0 --port XXXX --NotebookApp.token=SOMETOKENWORD --KernelSpecManager.ensure_native_kernel=False'
 
 where `XXXX` is the port to be used for `jupyterlab`.
 
