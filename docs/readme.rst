@@ -1,9 +1,10 @@
 resen-core
 =============
 
-The core docker image used by `resen`_. It builds upon a standard
-Ubuntu Linux image and comes preinstalled with a stack of commonly
-used geospace libraries and software packages.
+The core docker image used by `resen`_. It builds upon a standard Ubuntu
+Linux image and comes preinstalled with a stack of commonly used geospace
+libraries and software packages. A list of all the packages installed
+in this version of resen-core can be found here: :ref:`Python Packages`.
 
 Documentation
 -------------
