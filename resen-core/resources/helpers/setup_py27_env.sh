@@ -8,7 +8,7 @@
 echo "**** Installing python 2.7 packages ****"
 
 # upgrade pip
-pip install pip==19.3.1
+pip install pip==20.1.1
 
 # Now use pip to install everything we can
 # Notes: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -37,14 +37,17 @@ pip install -U paramiko==2.4.2 \
                sciunit2==0.4.post3.dev95073526 \
                madrigalweb==3.1.10 \
                pyproj==1.9.6 \
-               cartopy==0.17.0 \
                bsddb3==6.2.6 \
                aacgmv2==2.5.2 \
                pymap3d==1.8.1 \
-               astropy==2.0.14
+               astropy==2.0.14 \
+               ipympl==0.5.6 \
+               # sunpy==0.9.10
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
+
+pip install  cartopy==0.17.0
 
 pip install spacepy==0.2.1
 source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_LIB
@@ -55,6 +58,12 @@ rm OMNI_OMNI2_merged_20120213-v1.cdf
 
 # Installing mangopy (14 June 2018)
 pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
+
+# Install visuamisr
+pip install git+https://github.com/asreimer/visuamisr.git@v2.0.3
+
+# Install citationhelper
+pip install git+https://github.com/EarthCubeInGeo/citationhelper.git@v0.2
 
 # cleanup
 rm -rf ~/.cache/pip/*

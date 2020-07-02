@@ -19,7 +19,8 @@
 import os
 import sys
 
-from visuamisr import __version__
+#from visuamisr import __version__
+__version__ = 'v2020.1.0'
 
 # sys.path.insert(0, os.path.abspath('.'))
 # mock modules for c extensions
@@ -44,8 +45,8 @@ from visuamisr import __version__
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
+    'sphinx.ext.coverage',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -65,9 +66,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Integrated GeoScience Observatory'
-copyright = u'2019, asreimer'
-author = u'asreimer'
+project = u'Resen-core'
+copyright = u'2019, Integrated GeoScience Observatory'
+author = u'Resen Team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -128,7 +129,7 @@ pygments_style = 'sphinx'
 # keep_warnings = False
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+#todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -136,17 +137,20 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+#html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
+
+html_static_path = ['_static']
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    'github_user': 'asreimer',
-    'github_repo': 'resen-core',
-    'description': 'The core docker image used by resen.',
-}
+#html_theme_options = {
+#    'github_user': 'asreimer',
+#    'github_repo': 'resen-core',
+#    'description': 'The core docker image used by resen.',
+#}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -254,11 +258,11 @@ html_theme_options = {
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'resen-coredoc'
+#htmlhelp_basename = 'resen-coredoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements = {
+#latex_elements = {
      # The paper size ('letterpaper' or 'a4paper').
      #
      # 'papersize': 'letterpaper',
@@ -274,15 +278,15 @@ latex_elements = {
      # Latex figure (float) alignment
      #
      # 'figure_align': 'htbp',
-}
+#}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, 'resen-core.tex', u'resen-core Documentation',
-     u'Ashton Reimer', 'manual'),
-]
+#latex_documents = [
+#    (master_doc, 'resen-core.tex', u'resen-core Documentation',
+#     u'Ashton Reimer', 'manual'),
+#]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
@@ -321,10 +325,10 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'resen-core', u'resen-core Documentation',
-     [author], 1)
-]
+#man_pages = [
+#    (master_doc, 'resen-core', u'resen-core Documentation',
+#     [author], 1)
+#]
 
 # If true, show URL addresses after external links.
 #
@@ -336,11 +340,11 @@ man_pages = [
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [
-    (master_doc, 'resen-core', u'resen-core Documentation',
-     author, 'resen-core', 'The core docker image used by resen.',
-     'Miscellaneous'),
-]
+#texinfo_documents = [
+#    (master_doc, 'resen-core', u'resen-core Documentation',
+#     author, 'resen-core', 'The core docker image used by resen.',
+#     'Miscellaneous'),
+#]
 
 # Documents to append as an appendix to all manuals.
 #
@@ -362,10 +366,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = project
-epub_author = author
-epub_publisher = author
-epub_copyright = copyright
+#epub_title = project
+#epub_author = author
+#epub_publisher = author
+#epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
 # epub_basename = project
@@ -413,7 +417,7 @@ epub_copyright = copyright
 # epub_post_files = []
 
 # A list of files that should not be packed into the epub file.
-epub_exclude_files = ['search.html']
+#epub_exclude_files = ['search.html']
 
 # The depth of the table of contents in toc.ncx.
 #
