@@ -1,5 +1,5 @@
 resen-core
-=============
+==========
 
 The core docker image used by `resen`_. It builds upon a standard
 Ubuntu Linux image and comes preinstalled with a stack of commonly
