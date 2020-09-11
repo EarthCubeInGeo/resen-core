@@ -66,7 +66,7 @@ if [ $(id -u) == 0 ] ; then
         # (it could be mounted, and we shouldn't create it if it already exists)
         if [[ ! -e "/home/$NB_USER" ]]; then
             echo "Relocating home dir to /home/$NB_USER"
-            mv /home/jovyan "/home/$NB_USER"
+            mv /home/jovyan "/home/$NB_USER" || ln -s /home/jovyan "/home/$NB_USER"
         fi
         # if workdir is in /home/jovyan, cd to /home/$NB_USER
         if [[ "$PWD/" == "/home/jovyan/"* ]]; then
@@ -76,29 +76,27 @@ if [ $(id -u) == 0 ] ; then
         fi
     fi
 
-    # Change UID of NB_USER to NB_UID if it does not match
-    if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
-        echo "Set $NB_USER UID to: $NB_UID"
-        usermod -u $NB_UID $NB_USER
-    fi
-
-    # Set NB_USER primary gid to NB_GID (after making the group).  Set
-    # supplementary gids to NB_GID and 100.
-    if [ "$NB_GID" != $(id -g $NB_USER) ] ; then
-        echo "Add $NB_USER to group: $NB_GID"
-        groupadd -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
-        usermod  -g $NB_GID -aG 100 $NB_USER
+    # Change UID:GID of NB_USER to NB_UID:NB_GID if it does not match
+    if [ "$NB_UID" != $(id -u $NB_USER) ] || [ "$NB_GID" != $(id -g $NB_USER) ]; then
+        echo "Set user $NB_USER UID:GID to: $NB_UID:$NB_GID"
+        if [ "$NB_GID" != $(id -g $NB_USER) ]; then
+            groupadd -f -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
+        fi
+        userdel $NB_USER
+        useradd --home /home/$NB_USER -u $NB_UID -g $NB_GID -G 100 -l $NB_USER
     fi
 
     # Enable sudo if requested
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        # echo "Granting $NB_USER sudo access and appending $CONDA_DIR/bin to sudo PATH"
         echo "Granting $NB_USER sudo access"
+        # and appending $CONDA_DIR/bin to sudo PATH"  # see comment below 
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
 
-    # Add $CONDA_DIR/bin to sudo secure_path (not needed for resen-core)
-    #sed -r "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    # Add $CONDA_DIR/bin to sudo secure_path
+    # removed 9 Sept 2020 from https://github.com/jupyter/docker-stacks/blob/d4a632faefb34ca9f502b84b8e5d6a1108dbda5b/base-notebook/start.sh
+    # we don't use conda in our docker image
+    # sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
@@ -106,7 +104,7 @@ if [ $(id -u) == 0 ] ; then
     echo "Executing the command: ${cmd[@]}"
     exec sudo -E -H -u $NB_USER PATH=$PATH XDG_CACHE_HOME=/home/$NB_USER/.cache PYTHONPATH=${PYTHONPATH:-} "${cmd[@]}"
 else
-    if [[ "$NB_UID" == "$(id -u jovyan)" && "$NB_GID" == "$(id -g jovyan)" ]]; then
+    if [[ "$NB_UID" == "$(id -u jovyan 2>/dev/null)" && "$NB_GID" == "$(id -g jovyan 2>/dev/null)" ]]; then
         # User is not attempting to override user/group via environment
         # variables, but they could still have overridden the uid/gid that
         # container runs as. Check that the user has an entry in the passwd
