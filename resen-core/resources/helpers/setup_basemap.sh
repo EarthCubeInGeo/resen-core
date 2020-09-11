@@ -3,7 +3,7 @@
 #
 #    A helper script for installing basemap
 #
-#    Assumes you have py27 and py36 python virtual environments
+#    Assumes you have py38 python virtual environments
 #
 #######################################################################################
 
@@ -12,12 +12,7 @@ wget https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
 tar -zxf v1.2.0rel.tar.gz
 cd basemap-1.2.0rel
 
-source ${HOME}/envs/py27/bin/activate
-pip install .
-
-deactivate
-
-source ${HOME}/envs/py36/bin/activate
+source ${HOME}/envs/py38/bin/activate
 pip install .
 
 deactivate
