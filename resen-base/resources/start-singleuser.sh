@@ -5,7 +5,7 @@
 set -e
 
 # modified 9 Sept 2020 from https://github.com/jupyter/docker-stacks/blob/d4a632faefb34ca9f502b84b8e5d6a1108dbda5b/base-notebook/start-singleuser.sh
-source /home/jovyan/envs/py36/bin/activate
+source /home/jovyan/envs/py38/bin/activate
 
 # set default ip to 0.0.0.0
 if [[ "$NOTEBOOK_ARGS $@" != *"--ip="* ]]; then
