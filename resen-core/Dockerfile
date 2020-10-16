@@ -1,4 +1,4 @@
-#FROM earthcubeingeo/resen-base:2020.1.0
+#FROM earthcubeingeo/resen-base:2020.2.0
 FROM resenbasetest:latest
 
 LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
@@ -46,7 +46,7 @@ RUN apt-get update && \
     npm nodejs && \
     rm -rf /var/lib/apt/lists/*
 
-# Create python 2.7 and python 3.6 virtual environments
+# Create python 3.8 virtual environment
 USER $NB_USER
 RUN /bin/bash -c 'mkdir -p /home/$NB_USER/envs && \
         python3 -m virtualenv -p /usr/bin/python3.8 /home/$NB_USER/envs/py38'
@@ -116,7 +116,7 @@ RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
 # Set default jupyter terminal shell
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
                    jupyter lab --generate-config'
-RUN sed -i -e 's/#c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
+RUN sed -i -e 's/# c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
 
 # Set the jupyterlab user-settings
 RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
