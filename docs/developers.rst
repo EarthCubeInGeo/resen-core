@@ -86,7 +86,7 @@ the `resen`_ tool, e.g. when a new image is being created and has not been
 integrated in the `resen`_ tool. To proceed you need `docker`_ installed in your
 system and enough resources allocated for compilation. The following command
 will start jupyter lab based on the resen-core image that was pulled previously
-, i.e. earthcubeingeo/resen-core:2019.1.0 ::
+, i.e. earthcubeingeo/resen-core:2020.2.0 ::
 
     $ docker run --name a_container_name  -it -p XXXX:XXXX earthcubeingeo/resen-core:2020.2.0 /bin/bash -c 'source ~/envs/py38/bin/activate && jupyter lab --no-browser --ip 0.0.0.0 --port XXXX --NotebookApp.token=SOMETOKENWORD --KernelSpecManager.ensure_native_kernel=False'
 
