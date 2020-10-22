@@ -3,7 +3,7 @@
 Python Packages Available in Resen-core
 =======================================
 
-This version of resen-core includes one python virtual environment, py36 based on python3.8.
+This version of resen-core includes one python virtual environment, py38 based on python3.8.
 Below are the packages available in that environment.
 
 Python Packages included
