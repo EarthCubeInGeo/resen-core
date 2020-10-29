@@ -17,7 +17,6 @@ pydarn,1.1.0,Library for data visualization of SuperDARN data.,https://pydarn.re
 pyephem,3.7.7.0,Package for performing high-precision astronomy computations,https://pypi.org/project/pyephem/
 pyglow,0.0.0(10/19/2020),Upper atmosphere climatological models,https://github.com/timduly4/pyglow
 pymap3d,2.4.1,Coordinate transforms and geodesy functions,https://geospace-code.github.io/pymap3d/
-pymongo,3.11.0,Tools for working with MongoDB,https://pymongo.readthedocs.io/
 scipy,1.5.2,Advanced mathematical operations,https://www.scipy.org/
 sciunit2,0.4.post58.dev224550607,Tool to create reusable research objects,https://pypi.org/project/sciunit2/
 sgp4,2.12,Propagation of satellite TLEs,https://pypi.org/project/sgp4/
