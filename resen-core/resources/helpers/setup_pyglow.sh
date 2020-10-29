@@ -3,8 +3,7 @@
 #
 #    A helper script for installing pyglow
 #
-#    Assumes you have conda installed with a py27 virtual environment
-#    and another environment with the name py36
+#    Assumes you have a py38 python virtual environments
 #
 #######################################################################################
 
@@ -14,17 +13,9 @@ PYGLOW_BUILD_DIR=pyglow_build
 
 git clone https://github.com/timduly4/pyglow.git $PYGLOW_BUILD_DIR
 cd $PYGLOW_BUILD_DIR
-git checkout 054bf800263c01ecfa783741c9cfe8d3d6c259ca -b master_20190904
+git checkout 36e998524cf603cf61ca7d98ced61e2f945ab1df -b master_20201019
 
-source ${HOME}/envs/py27/bin/activate
-
-make -C src/pyglow/models source
-pip install .
-python -c "import pyglow"
-
-deactivate
-
-source ${HOME}/envs/py36/bin/activate
+source ${HOME}/envs/py38/bin/activate
 
 make -C src/pyglow/models source
 pip install .
