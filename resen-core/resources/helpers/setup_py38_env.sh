@@ -8,7 +8,7 @@
 echo "**** Installing python 3.8 packages ****"
 
 # upgrade pip
-pip install pip==20.2.3
+pip install pip==20.2.4
 
 # Now use pip to install everything we can
 # NOTES: pyproj==1.9.6 required for basemap, 2.0.0 breaks basemap
@@ -47,7 +47,8 @@ pip install -U jupyterhub==1.1.0 \
                watermark==2.0.2 \
                seaborn==0.11.0 \
                pyephem==3.7.7.0 \
-               skyfield==1.26
+               skyfield==1.26 \
+               sciunit2==0.4.post58.dev224550607
 
 #build matplotlib font cache
 MPLBACKEND=Agg python -uc "import matplotlib.pyplot"
