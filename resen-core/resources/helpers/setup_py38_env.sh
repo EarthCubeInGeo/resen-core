@@ -54,7 +54,7 @@ pip install -U jupyterhub==1.1.0 \
 MPLBACKEND=Agg python -uc "import matplotlib.pyplot"
 
 # install sunpy
-pip install -U sunpy==2.0.1 beautifulsoup4==4.9.1 drms==0.5.7 zeep==3.4.0 tqdm==4.48.2
+pip install -U sunpy==2.0.3 beautifulsoup4==4.9.1 drms==0.5.7 zeep==3.4.0 tqdm==4.48.2
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.0.3  # have to install after installing numpy
