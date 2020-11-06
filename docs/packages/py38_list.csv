@@ -22,7 +22,7 @@ sciunit2,0.4.post58.dev224550607,Tool to create reusable research objects,https:
 sgp4,2.12,Propagation of satellite TLEs,https://pypi.org/project/sgp4/
 spacepy,0.2.1,Data analysis tools for space-based datasets,https://pythonhosted.org/SpacePy/
 sqlalchemy,1.3.19,Database tool kit,https://www.sqlalchemy.org/
-sunpy,2.0.1,Open-source solar data analysis environment,https://docs.sunpy.org
+sunpy,2.0.3,Open-source solar data analysis environment,https://docs.sunpy.org
 sympy,1.6.2,Symbolic computation,https://www.sympy.org/en/index.html
 tables,3.6.1,HDF5 binary data format,https://pypi.org/project/tables/
 viresclient,0.6.2,Interface to access ESA's Swarm data and models,https://pypi.org/project/viresclient/
