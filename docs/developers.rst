@@ -40,7 +40,7 @@ should be available in the user's docker list::
     $ docker images
 
     REPOSITORY      TAG        IMAGE ID            CREATED             SIZE
-    resencoretest  latest     5431trew4r12     2 hours ago         5.38GB
+    resencoretest  latest      5431trew4r12        2 hours ago         5.38GB
 
 Resen-base
 ----------
