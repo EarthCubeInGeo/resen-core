@@ -5,11 +5,14 @@
 2020.2.0 (2020-11-20)
 +++++++++++++++++++++
 
-- Using ubuntu 20.04 as base image for resen-base
-- Upgrade to python 3.8 and deprecate python 2
-- Add packages sunpy, pyephem, skyfield and seaborn
+- Ugrade from ubuntu 18.04 to ubuntu 20.04 as base image for resen-base
+- Upgrade to python 3.8 and deprecate python 2 (py38 environment)
+- Removed davitpy (depends on python 2 and is superseded by pydarn)
+- Upgraded sciunit to python 3 version
+- Add packages sunpy, pyephem, skyfield, and seaborn
 - Upgrade the versions of the installed packages in py38
-- update tutorials
+- Update tutorials
+- Update docs
 
 2020.1.0 (2020-06-15)
 +++++++++++++++++++++
