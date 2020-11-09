@@ -2,7 +2,7 @@
 .. :changelog:
 
 
-2020.2.0 (2020-11-20)
+2020.2.0 (2020-11-09)
 +++++++++++++++++++++
 
 - Ugrade from ubuntu 18.04 to ubuntu 20.04 as base image for resen-base
