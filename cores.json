@@ -17,7 +17,7 @@
     {"version":"2020.1.0","repo":"resen-core","org":"earthcubeingeo",
      "image_id":"sha256:b1f1c9013924c95f678a0aa7403e343cc2ee103f438b1a237193f091170ba077",
      "repodigest":"sha256:7bf4e28cf06e40b0e12cb0474232d6d3b520ec1a8c2d361d83fc0cb97083989c",
-     "envpath":"/home/jovyan/envs/py36"}
+     "envpath":"/home/jovyan/envs/py36"},
 
     {"version":"2020.2.0","repo":"resen-core","org":"earthcubeingeo",
      "image_id":"sha256:232b82fb464d6c2d077fe6820e92e28645f317d59bcc8c0c89609c2452ca1180",
