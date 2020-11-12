@@ -1,4 +1,6 @@
-FROM ubuntu:bionic-20200403@sha256:b58746c8a89938b8c9f5b77de3b8cf1fe78210c696ab03a1442e235eea65d84f
+# based on jupyter:dockerstacks/base-notebook
+# https://github.com/jupyter/docker-stacks/blob/d4a632faefb34ca9f502b84b8e5d6a1108dbda5b/base-notebook/Dockerfile
+FROM ubuntu:focal-20200703@sha256:d5a6519d9f048100123c568eb83f7ef5bfcad69b01424f420f17c932b00dea76
 
 LABEL maintainer="Ingeo Team <ingeo-team@ingeo.datatransport.org>"
 LABEL description="The base docker image from which resen-core images are built."
@@ -16,16 +18,16 @@ ARG NB_GID="100"
 USER root
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get -yq dist-upgrade && \
-    apt-get install -yq --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -yq --no-install-recommends \
     wget \
     bzip2 \
     ca-certificates \
     sudo \
     locales \
     fonts-liberation \
-    run-one && \
-    rm -rf /var/lib/apt/lists/*
+    run-one \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install tini
 ARG TINI_VERSION="v0.18.0"
@@ -38,8 +40,8 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
 
 # Add a script that we will use to correct permissions after running certain commands
-ADD resources/fix-permissions /usr/local/bin/fix-permissions
-RUN chmod +x /usr/local/bin/fix-permissions
+COPY resources/fix-permissions /usr/local/bin/fix-permissions
+RUN chmod a+rx /usr/local/bin/fix-permissions
 
 # Enable prompt color in the skeleton .bashrc before creating the default NB_USER
 RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
@@ -61,6 +63,7 @@ CMD ["start-notebook.sh"]
 COPY resources/02-resen.sh /etc/profile.d/
 
 # Add scripts for starting servers
+# these came from github jupyter:dockerstacks/base-notebook
 COPY resources/start.sh /usr/local/bin/
 COPY resources/start-notebook.sh /usr/local/bin/
 COPY resources/start-singleuser.sh /usr/local/bin/
@@ -68,8 +71,13 @@ RUN chmod +x /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start-notebook.sh && \
     chmod +x /usr/local/bin/start-singleuser.sh
 
+# might want to add this in?
+#COPY jupyter_notebook_config.py /etc/jupyter/
+#RUN fix-permissions /etc/jupyter/
 
-#stuff from jupyter/scipy-notebook
+
+#stuff from jupyter/scipy-notebook (we don't use conda)
+#https://github.com/jupyter/docker-stacks/blob/d4a632faefb34ca9f502b84b8e5d6a1108dbda5b/scipy-notebook/Dockerfile
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     build-essential \
     git \
@@ -81,15 +89,15 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     netcat \
     pandoc \
     python-dev \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-generic-recommended \
-    texlive-latex-base \
-    texlive-latex-extra \
+    # ---- nbconvert dependencies ----
     texlive-xetex \
+    texlive-fonts-recommended \
+    texlive-plain-generic \
+    # ----
     tzdata \
     unzip && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends ffmpeg dvipng \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_USER
 WORKDIR /home/$NB_USER

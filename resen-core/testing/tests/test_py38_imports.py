@@ -15,11 +15,12 @@ import importlib
 class ImportTester(unittest.TestCase):
     # In the future, get this list from a Pipfile and 
     # include a test for package version number
-    packages = ['paramiko','IPython','pymongo','mechanize','netCDF4','cryptography','pytest',
+    packages = ['paramiko','IPython','seaborn','netCDF4','cryptography','pytest',
                 'nbformat','numpy','matplotlib','scipy','tables','sgp4','pandas','sympy',
                 'sqlalchemy','h5py','pytz','bokeh','yaml','cython','apexpy','cartopy',
                 'spacepy','aacgmv2','pymap3d','mangopy','madrigalWeb','visuamisr',
-                'citationhelper','viresclient','hdfviewer','watermark','pydarn','plasmapy']
+                'citationhelper','viresclient','hdfviewer','watermark','pydarn','plasmapy',
+                'sunpy','ephem','skyfield']
 
     def test_imports(self):
         # Try to import all the packages
