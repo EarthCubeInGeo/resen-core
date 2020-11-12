@@ -19,8 +19,7 @@
 import os
 import sys
 
-#from visuamisr import __version__
-__version__ = 'v2020.1.0'
+__version__ = 'v2020.2.0'
 
 # sys.path.insert(0, os.path.abspath('.'))
 # mock modules for c extensions
