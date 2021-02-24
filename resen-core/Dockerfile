@@ -83,6 +83,11 @@ RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
 
+# Install AMGeO
+COPY resources/helpers/AMGeO-2.0.0beta.zip .
+COPY resources/helpers/setup_amgeo.sh .
+RUN /bin/bash -cl 'bash setup_amgeo.sh && rm setup_amgeo.sh'
+
 # Install citationhelper
 USER root
 COPY resources/pkg_citations.json /home/$NB_USER/cache/
