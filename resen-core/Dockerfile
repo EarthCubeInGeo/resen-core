@@ -79,6 +79,12 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 
+# Install scivision empirical models (IRI, IGRF, MSISE)
+USER root
+COPY resources/helpers/setup_emp_models.sh .
+RUN /bin/bash -cl 'bash setup_emp_models.sh && rm setup_emp_models.sh'
+USER $NB_USER
+
 # Install pyglow
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
