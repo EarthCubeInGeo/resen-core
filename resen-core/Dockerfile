@@ -102,11 +102,11 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# Installing jupyter-widgets with interaction with matplotlib and bokeh
-RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
-                   jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-                   jupyter labextension install jupyter-matplotlib && \
-                   jupyter labextension install @bokeh/jupyter_bokeh'
+# # Installing jupyter-widgets with interaction with matplotlib and bokeh
+# RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
+#                    jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 && \
+#                    jupyter labextension install jupyter-matplotlib@0.9.0 && \
+#                    jupyter labextension install @bokeh/jupyter_bokeh@2.0.4'
 
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \

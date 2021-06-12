@@ -48,7 +48,10 @@ pip install -U jupyterhub==1.1.0 \
                seaborn==0.11.1 \
                ephem==3.7.7.1 \
                skyfield==1.39 \
-               sciunit2==0.4.post58.dev224550607
+               sciunit2==0.4.post58.dev224550607 \
+               pysat==3.0.0 \
+               plotly==4.14.3 \
+               xarray==0.18.2
 
 #build matplotlib font cache
 MPLBACKEND=Agg python -uc "import matplotlib.pyplot"
@@ -58,6 +61,8 @@ pip install -U sunpy==3.0.0 beautifulsoup4==4.9.3 drms==0.6.2 zeep==4.0.0 tqdm==
 
 # Custom pip installation for any package that needs it
 pip install apexpy==1.1.0  # have to install after installing numpy
+
+pip install OMMBV==0.5.4  # install after numpy
 
 pip install cartopy==0.19.0.post1 # have to install after installing numpy
 
@@ -70,6 +75,11 @@ source /usr/local/bin/definitions.B # to set the CDF definitios including $CDF_L
 python -uc "import spacepy.toolbox; spacepy.toolbox.update(QDomni=True)"
 # spacepy 0.2.1 doesn't clean up this file. Submitted issue and PR to spacepy, see https://github.com/spacepy/spacepy/pull/219
 rm OMNI_OMNI2_merged_20120213-v1.cdf
+
+# # install mayavi
+# pip install mayavi==4.7.3 PyQt6==6.1.0
+# jupyter nbextension install --py mayavi --user
+# jupyter nbextension install --py mayavi --user
 
 # Installing mangopy (14 June 2018)
 pip install git+https://github.com/astib/MANGO.git@2dd4ca5380dca54cac8d2180c3ad63fc041a5c67
