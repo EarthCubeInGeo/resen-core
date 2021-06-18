@@ -41,8 +41,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     libncurses5-dev \
-    cm-super \
-    npm nodejs && \
+    cm-super && \
     rm -rf /var/lib/apt/lists/*
 
 # Create python 3.8 virtual environment
@@ -102,12 +101,6 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# # Installing jupyter-widgets with interaction with matplotlib and bokeh
-# RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
-#                    jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 && \
-#                    jupyter labextension install jupyter-matplotlib@0.9.0 && \
-#                    jupyter labextension install @bokeh/jupyter_bokeh@2.0.4'
-
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
     echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc && \
@@ -115,9 +108,9 @@ RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
 
 # Set default jupyter terminal shell
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
-                   jupyter lab --generate-config'
+                   jupyter-lab --generate-config'
 RUN sed -i -e 's/# c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
 
 # Set the jupyterlab user-settings
-RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
-                 echo  "{\"disclaimed\": false,\"enabled\":false}" > /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings'
+#RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
+#                 echo  "{\"disclaimed\": false,\"enabled\":false}" > /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings'
