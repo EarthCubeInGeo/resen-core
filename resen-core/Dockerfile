@@ -110,6 +110,8 @@ RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
                    jupyter-lab --generate-config'
 RUN sed -i -e 's/# c.ServerApp.terminado_settings = {}/c.ServerApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_lab_config.py
+# needed so jupyterhub on the demo server starts things up properly (uses jupyterhub-singleuser) as of jupyterhub==1.1.0.
+RUN echo 'c.NotebookApp.terminado_settings = {"shell_command":["/bin/bash"]}' > /home/jovyan/.jupyter/jupyter_notebook_config.py
 
 # Set the jupyterlab user-settings
 RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
