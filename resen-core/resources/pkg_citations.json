@@ -6,6 +6,7 @@
  "numpy":"Stéfan van der Walt, S. Chris Colbert and Gaël Varoquaux. The NumPy Array: A Structure for Efficient Numerical Computation, Computing in Science & Engineering, 13, 22-30 (2011), DOI:10.1109/MCSE.2011.37",
  "plasmapy":"PlasmaPy Community, Nicholas A. Murphy, Andrew J. Leonard, Dominik Stańczak, Pawel M. Kozlowski, Samuel J. Langendorf, Colby C. Haggerty, Jasper P. Beckers, Stuart J. Mumford, Tulasi N. Parashar, and Yi-Min Huang. (2018, April). PlasmaPy: an open source community-developed Python package for plasma physics. Zenodo. http://doi.org/10.5281/zenodo.1238132",
  "pydarn":"Schmidt, M.T., Detwiller, M.H., Billet, D.D., Bland, E. C., Burrell, A. G., Kotyk, K., Peters, D. GO., Reimer, A. S., Sterne, K. T., and Thomas, E. G. (2020). pyDARN, v1.0.0, January 2020.",
+ "pysat":"Stoneback, Russell, et al. (2021). pysat/pysat v3.0 (Version v3.0). Zenodo. http://doi.org/10.5281/zenodo.1199703",
  "pytables":"Alted, F., Vilata, I. and PyTables Developers Team (2002). PyTables: Hierarchical Datasets in Python. http://www.pytables.org",
  "seaborn":"Michael Waskom and the seaborn development team (2020), mwaskom/seaborn, Zenodo. doi:10.5281/zenodo.592845",
  "skyfield":"Rhodes, B., “Skyfield: High precision research-grade positions for planets and Earth satellites generator”, Astrophysics Source Code Library. 2019. ascl:1907.024 http://rhodesmill.org/skyfield/",

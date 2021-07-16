@@ -1,6 +1,13 @@
 
 .. :changelog:
 
+2021.1.0 (2020-07-16)
++++++++++++++++++++++
+
+- Add empirical models IGRF, IRI2016, MSISE00
+- Upgrade the versions of the installed packages in py38
+- Updating to jupyterlab3, using prebuilt extensions that don't need npm and nodejs
+
 
 2020.2.0 (2020-11-11)
 +++++++++++++++++++++
