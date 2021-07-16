@@ -6,6 +6,7 @@
 
 - Add empirical models IGRF, IRI2016, MSISE00
 - Upgrade the versions of the installed packages in py38
+- Added pysat, xarray, and ommbv
 - Updating to jupyterlab3, using prebuilt extensions that don't need npm and nodejs
 
 
