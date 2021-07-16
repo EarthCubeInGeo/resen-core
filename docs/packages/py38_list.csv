@@ -21,7 +21,7 @@ OMMBV,0.5.4,Magnetic basis vectors,https://pypi.org/project/OMMBV/
 pandas,1.2.4,Data analysis,https://pandas.pydata.org/
 plasmapy,0.6.0,Package for plasma research,https://www.plasmapy.org/
 pydarn,2.1,SuperDARN data analysis and visualization,https://pydarn.readthedocs.io/en/master/
-pyglow,0.0.0(10/19/2020),Upper atmosphere climatological models,https://github.com/timduly4/pyglow
+pyglow,0.0.0(Jan4,2021),Upper atmosphere climatological models,https://github.com/timduly4/pyglow/
 pymap3d,2.7.0,Coordinate transforms and geodesy functions,https://geospace-code.github.io/pymap3d/
 pysat,3.0.0,Space physics data access,https://pypi.org/project/pysat/
 scipy,1.6.3,Advanced mathematical operations,https://www.scipy.org/
