@@ -1,29 +1,39 @@
 ﻿Package,Version,Application,Source
-aacgmv2,2.6.0,AACGM magnetic coordinate system,https://pypi.org/project/aacgmv2/
-apexpy,1.0.3,Apex magnetic coordinate system,https://pypi.org/project/apexpy/
-astropy,4.0.1.post1,Packages for use in astronomy,https://www.astropy.org/
+aacgmv2,2.6.2,AACGM magnetic coordinate system,https://pypi.org/project/aacgmv2/
+apexpy,1.1.0,Apex magnetic coordinate system,https://pypi.org/project/apexpy/
+astropy,4.2.1.post1,Packages for use in astronomy,https://www.astropy.org/
 basemap,1.2.1,Mapping,https://matplotlib.org/basemap/
-bokeh,2.2.1,Interactive visualization library,https://bokeh.pydata.org/en/latest/
-cartopy,0.18.0,Mapping,https://scitools.org.uk/cartopy/docs/latest/
-h5py,2.10.0,HDF5 binary data format,https://www.h5py.org/
+bokeh,2.3.2,Interactive visualization library,https://bokeh.pydata.org/en/latest/
+cartopy,0.19.0,Mapping,https://scitools.org.uk/cartopy/docs/latest/
+cdflib,0.3.20,CDF data format,https://pypi.org/project/cdflib/
+citationhelper,0.3,Tracking software to cite,https://pypi.org/project/citationhelper/
+ephem,3.7.7.1,High-prcision astronomy computations,https://rhodesmill.org/pyephem/
+h5py,3.2.1,HDF5 binary data format,https://www.h5py.org/
+igrf,13.0.0,IGRF empirical model,https://pypi.org/project/igrf/
+iri2016,1.11.1,IRI empirical model,https://pypi.org/project/iri2016/
 madrigalweb,3.1.12,Accessing the Madrigal database,http://cedar.openmadrigal.org/docs/name/rr_python.html
 mangopy,0.1,MANGO data analysis,https://github.com/astib/MANGO
-matplotlib,3.3.1,Basic plotting,https://matplotlib.org/
-netcdf4,1.5.4,netCDF4 data format,https://unidata.github.io/netcdf4-python/netCDF4/index.html
-numpy,1.19.1,Numerical array handling,http://www.numpy.org/
-pandas,1.1.2,Data analysis,https://pandas.pydata.org/
-plasmapy,0.4.0,Package for plasma research,https://www.plasmapy.org/
-pydarn,1.1.0,Library for data visualization of SuperDARN data.,https://pydarn.readthedocs.io/en/master/
-pyephem,3.7.7.0,Package for performing high-precision astronomy computations,https://pypi.org/project/pyephem/
+matplotlib,3.4.2,Basic plotting,https://matplotlib.org/
+msise00,1.10.0,NRL MSISE-00 empirical model,https://pypi.org/project/msise00/
+netcdf4,1.5.6,netCDF4 data format,https://unidata.github.io/netcdf4-python/netCDF4/index.html
+numpy,1.20.3,Numerical array handling,http://www.numpy.org/
+OMMBV,0.5.4,Magnetic basis vectors,https://pypi.org/project/OMMBV/
+pandas,1.2.4,Data analysis,https://pandas.pydata.org/
+plasmapy,0.6.0,Package for plasma research,https://www.plasmapy.org/
+pydarn,2.1,SuperDARN data analysis and visualization,https://pydarn.readthedocs.io/en/master/
 pyglow,0.0.0(10/19/2020),Upper atmosphere climatological models,https://github.com/timduly4/pyglow
-pymap3d,2.4.1,Coordinate transforms and geodesy functions,https://geospace-code.github.io/pymap3d/
-scipy,1.5.2,Advanced mathematical operations,https://www.scipy.org/
+pymap3d,2.7.0,Coordinate transforms and geodesy functions,https://geospace-code.github.io/pymap3d/
+pysat,3.0.0,Space physics data access,https://pypi.org/project/pysat/
+scipy,1.6.3,Advanced mathematical operations,https://www.scipy.org/
 sciunit2,0.4.post58.dev224550607,Tool to create reusable research objects,https://pypi.org/project/sciunit2/
-sgp4,2.12,Propagation of satellite TLEs,https://pypi.org/project/sgp4/
-spacepy,0.2.1,Data analysis tools for space-based datasets,https://pythonhosted.org/SpacePy/
-sqlalchemy,1.3.19,Database tool kit,https://www.sqlalchemy.org/
-sunpy,2.0.3,Open-source solar data analysis environment,https://docs.sunpy.org
-sympy,1.6.2,Symbolic computation,https://www.sympy.org/en/index.html
+seaborn,0.11.1,Statistical data visualization,https://seaborn.pydata.org/
+sgp4,2.19,Propagation of satellite TLEs,https://pypi.org/project/sgp4/
+skyfield,1.39,High-prcision astronomy computations,https://rhodesmill.org/skyfield/
+spacepy,0.2.2,Data analysis tools for space-based datasets,https://pythonhosted.org/SpacePy/
+sqlalchemy,1.4.15,Database tool kit,https://www.sqlalchemy.org/
+sunpy,3.0.0,Open-source solar data analysis environment,https://docs.sunpy.org
+sympy,1.8,Symbolic computation,https://www.sympy.org/en/index.html
 tables,3.6.1,HDF5 binary data format,https://pypi.org/project/tables/
-viresclient,0.6.2,Interface to access ESA's Swarm data and models,https://pypi.org/project/viresclient/
+viresclient,0.8.0,Interface to access ESA's Swarm data and models,https://pypi.org/project/viresclient/
 visuamisr,2.0.3,Read and visualize AMISR data,https://github.com/asreimer/visuamisr
+xarray,0.18.2,Labeled multi-dimensional arrays,http://xarray.pydata.org/en/stable/
