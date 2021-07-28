@@ -13,7 +13,7 @@ PYGLOW_BUILD_DIR=pyglow_build
 
 git clone https://github.com/timduly4/pyglow.git $PYGLOW_BUILD_DIR
 cd $PYGLOW_BUILD_DIR
-git checkout 36e998524cf603cf61ca7d98ced61e2f945ab1df -b master_20201019
+git checkout 9bf2b364aa66e3428a87888115fc3cbd2ab05540 -b master_20210104
 
 source ${HOME}/envs/py38/bin/activate
 

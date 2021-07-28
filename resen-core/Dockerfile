@@ -41,8 +41,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     libncurses5-dev \
-    cm-super \
-    npm nodejs && \
+    cm-super && \
     rm -rf /var/lib/apt/lists/*
 
 # Create python 3.8 virtual environment
@@ -79,6 +78,12 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
 COPY resources/helpers/setup_basemap.sh .
 RUN /bin/bash -c 'bash setup_basemap.sh && rm setup_basemap.sh'
 
+# Install scivision/space-physics empirical models (IRI, IGRF, MSISE)
+USER root
+COPY resources/helpers/setup_emp_models.sh .
+RUN /bin/bash -cl 'bash setup_emp_models.sh && rm setup_emp_models.sh'
+USER $NB_USER
+
 # Install pyglow
 COPY resources/helpers/setup_pyglow.sh .
 RUN /bin/bash -cl 'bash setup_pyglow.sh && rm setup_pyglow.sh'
@@ -102,12 +107,6 @@ RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
                    python feature_download.py physical cultural cultural-extra --do_scales 110m && \
                    rm feature_download.py'
 
-# Installing jupyter-widgets with interaction with matplotlib and bokeh
-RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
-                   jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-                   jupyter labextension install jupyter-matplotlib && \
-                   jupyter labextension install @bokeh/jupyter_bokeh'
-
 # Finally set up some stuff to make user experience better
 RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
     echo "MPLBACKEND=Agg" >> /home/$NB_USER/.bashrc && \
@@ -115,8 +114,10 @@ RUN echo "TERM=xterm-256color" >> /home/$NB_USER/.bashrc && \
 
 # Set default jupyter terminal shell
 RUN /bin/bash -cl 'source /home/$NB_USER/envs/py38/bin/activate && \
-                   jupyter lab --generate-config'
-RUN sed -i -e 's/# c.NotebookApp.terminado_settings = {}/c.NotebookApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_notebook_config.py
+                   jupyter-lab --generate-config'
+RUN sed -i -e 's/# c.ServerApp.terminado_settings = {}/c.ServerApp.terminado_settings = {\"shell_command\"\:[\"\/bin\/bash\"]}/' /home/jovyan/.jupyter/jupyter_lab_config.py
+# needed so jupyterhub on the demo server starts things up properly (uses jupyterhub-singleuser) as of jupyterhub==1.1.0.
+RUN echo 'c.NotebookApp.terminado_settings = {"shell_command":["/bin/bash"]}' > /home/jovyan/.jupyter/jupyter_notebook_config.py
 
 # Set the jupyterlab user-settings
 RUN /bin/bash -cl 'mkdir -p /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension && \
